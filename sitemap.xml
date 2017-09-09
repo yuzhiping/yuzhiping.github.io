@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hexsmith.site/tags/index.html</loc>
+    
+    <lastmod>2017-09-09T02:36:53.002Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://hexsmith.site/2017/09/08/hello-world/</loc>
     
     <lastmod>2017-09-08T14:53:00.435Z</lastmod>
