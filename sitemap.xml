@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hexsmith.site/schedule/index.html</loc>
+    
+    <lastmod>2017-09-09T02:45:31.361Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://hexsmith.site/archives/index.html</loc>
+    
+    <lastmod>2017-09-09T02:44:45.449Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://hexsmith.site/categories/index.html</loc>
+    
+    <lastmod>2017-09-09T02:44:13.056Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://hexsmith.site/about/index.html</loc>
+    
+    <lastmod>2017-09-09T02:44:01.688Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://hexsmith.site/tags/index.html</loc>
     
     <lastmod>2017-09-09T02:36:53.002Z</lastmod>
