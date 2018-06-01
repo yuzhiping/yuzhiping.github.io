@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://hexsmith.site/2018/06/01/singleton/index.html">
 <meta property="og:site_name" content="Hexsmith&#39;s blog">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-01T15:07:58.080Z">
+<meta property="og:updated_time" content="2018-06-01T15:18:22.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="singleton">
   
@@ -194,133 +194,172 @@ var _hmt = _hmt || [];
 <li>单例模式限制了一个类的实例化，并确保java虚拟机中只存在一个类的实例。</li>
 <li>单例类必须提供一个全局访问点来获取类的实例。</li>
 <li>单例模式用于日志记录，驱动程序对象，缓存和线程池。</li>
-<li><p>Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder，Prototype，Facade等。</p>
+<li>Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder，Prototype，Facade等。</li>
+</ul>
 <h3 id="2-要点"><a href="#2-要点" class="headerlink" title="2.要点"></a>2.要点</h3><ul>
 <li>私有的构造函数</li>
-<li><p>公共静态方法，返回类的实例，这是外部世界获取单例类的实例的全局访问点。</p>
-<h3 id="3-饿汉式单例"><a href="#3-饿汉式单例" class="headerlink" title="3.饿汉式单例"></a>3.饿汉式单例</h3><p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>/**</p>
-<ul>
-<li>@Description:饿汉式单例</li>
-<li>@author hexsmith</li>
-<li>@date 2017年11月6日 下午6:36:41 </li>
-<li><p>@version v1.0<br>*/<br>public class EagerInitializedSingleton {</p>
-<p> private static final EagerInitializedSingleton instance = new EagerInitializedSingleton();</p>
-<p> private EagerInitializedSingleton(){}</p>
-<p> public static EagerInitializedSingleton getInstance(){</p>
-<pre><code>return instance;
-</code></pre><p> }<br>}<br>这种在初始化时，Singleton类的实例是在类加载时创建的，这是创建单例类的最简单的方法，但它有一个缺点即使客户端应用程序可能没有使用它也会创建实例。</p>
-<h3 id="4-懒汉式单例"><a href="#4-懒汉式单例" class="headerlink" title="4.懒汉式单例"></a>4.懒汉式单例</h3></li>
+<li>公共静态方法，返回类的实例，这是外部世界获取单例类的实例的全局访问点。</li>
 </ul>
-<p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>/**</p>
-<ul>
-<li>@Description:懒汉式单例</li>
-<li>@author hexsmith</li>
-<li>@date 2017年11月6日 下午6:47:10 </li>
-<li><p>@version v1.0<br>*/<br>public class LazyInitializedSingleton {</p>
-<p> private static LazyInitializedSingleton instance;</p>
-<p> private LazyInitializedSingleton(){}</p>
-<p> public static LazyInitializedSingleton getInstance(){</p>
-<pre><code>if (instance == null){
-    instance = new LazyInitializedSingleton();
+<h3 id="3-饿汉式单例"><a href="#3-饿汉式单例" class="headerlink" title="3.饿汉式单例"></a>3.饿汉式单例</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+/**
+ * @Description:饿汉式单例
+ * @author hexsmith
+ * @date 2017年11月6日 下午6:36:41 
+ * @version v1.0 
+ */
+public class EagerInitializedSingleton {
+
+    private static final EagerInitializedSingleton instance = new EagerInitializedSingleton();
+
+    private EagerInitializedSingleton(){}
+
+    public static EagerInitializedSingleton getInstance(){
+
+        return instance;
+    }
 }
-return instance;
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>上面的实现对单线程环境工作良好，但是当涉及到多线程系统时，如果多个线程同时处于if循环内部，则会导致问题。它会破坏单例模式，两个线程都会得到单例类的不同实例。<br>###5.静态代码块实现单例</p>
-<p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>/**</p>
-<ul>
-<li>@Description:使用static代码块实现单例</li>
-<li>@author hexsmith</li>
-<li>@date 2017年11月6日 下午6:41:15 </li>
-<li><p>@version v1.0<br>*/<br>public class StaticBlockSingleton {</p>
-<p> private static StaticBlockSingleton instance;</p>
-<p> private StaticBlockSingleton(){}</p>
-<p> static{</p>
-<pre><code>try{
-    instance = new StaticBlockSingleton();
-}catch (Exception e) {
-    throw new RuntimeException(&quot;Exception occured in creating singleton instance&quot;);
+</code></pre><p>这种在初始化时，Singleton类的实例是在类加载时创建的，这是创建单例类的最简单的方法，但它有一个缺点即使客户端应用程序可能没有使用它也会创建实例。</p>
+<h3 id="4-懒汉式单例"><a href="#4-懒汉式单例" class="headerlink" title="4.懒汉式单例"></a>4.懒汉式单例</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+/**
+ * @Description:懒汉式单例
+ * @author hexsmith
+ * @date 2017年11月6日 下午6:47:10 
+ * @version v1.0 
+ */
+public class LazyInitializedSingleton {
+
+    private static LazyInitializedSingleton instance;
+
+    private LazyInitializedSingleton(){}
+
+    public static LazyInitializedSingleton getInstance(){
+        if (instance == null){
+            instance = new LazyInitializedSingleton();
+        }
+        return instance;
+    }
+
 }
-</code></pre><p> }</p>
-<p> public static StaticBlockSingleton getInstance(){</p>
-<pre><code>return instance;
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>###6.静态内部类实现单例<br>在Java 5之前，Java内存模型存在很多问题，以上方法在某些情况下失败，因为太多的线程试图同时获得Singleton类的实例。所以Bill Pugh提出了一种使用内部静态帮助类来创建Singleton类的另一种方法。Bill Pugh Singleton的实现是这样的</p>
-<p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>/**</p>
-<ul>
-<li>@Description 静态内部类实现单例</li>
-<li>@author hexsmith</li>
-<li>@date 2018年5月9日 下午3:44:11</li>
-<li><p>@version v1.0<br>*/<br>public class BillPughSingleton {</p>
-<p> private BillPughSingleton() {}</p>
-<p> private static class singletonHelper {</p>
-<pre><code>private static final BillPughSingleton instance = new BillPughSingleton();
-</code></pre><p> }</p>
-<p> public static BillPughSingleton getInstance() {</p>
-<pre><code>return singletonHelper.instance;
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>注意包含单例类的实例的私有内部静态类。加载单例类时，SingletonHelper类不会加载到内存中，只有当有人调用getInstance方法时，才会加载此类，并创建Singleton类实例。这是Singleton类最广泛使用的方法，因为它不需要同步。<br>###7.线程安全的单例模式</p>
-<p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>/**</p>
-<ul>
-<li>@Description:线程安全的单例</li>
-<li>@author hexsmith</li>
-<li>@date 2017年11月6日 下午6:50:00</li>
-<li><p>@version v1.0<br>*/<br>public class ThreadSafeSingleton {</p>
-<p> private static ThreadSafeSingleton instance;</p>
-<p> private ThreadSafeSingleton() {<br> }</p>
-<p> public static synchronized ThreadSafeSingleton getInstance() {</p>
-<pre><code>if (instance == null) {
-    instance = new ThreadSafeSingleton();
+</code></pre><p>上面的实现对单线程环境工作良好，但是当涉及到多线程系统时，如果多个线程同时处于if循环内部，则会导致问题。它会破坏单例模式，两个线程都会得到单例类的不同实例。</p>
+<h3 id="5-静态代码块实现单例"><a href="#5-静态代码块实现单例" class="headerlink" title="5.静态代码块实现单例"></a>5.静态代码块实现单例</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+/**
+ * @Description:使用static代码块实现单例
+ * @author hexsmith
+ * @date 2017年11月6日 下午6:41:15 
+ * @version v1.0 
+ */
+public class StaticBlockSingleton {
+
+    private static StaticBlockSingleton instance;
+
+    private StaticBlockSingleton(){}
+
+    static{
+        try{
+            instance = new StaticBlockSingleton();
+        }catch (Exception e) {
+            throw new RuntimeException(&quot;Exception occured in creating singleton instance&quot;);
+        }
+    }
+
+    public static StaticBlockSingleton getInstance(){
+        return instance;
+    }
+
 }
-return instance;
-</code></pre><p> }</p>
-<p> public static ThreadSafeSingleton getInstanceUsingDoubleLocking() {</p>
-<pre><code>if (instance == null) {
-    synchronized (ThreadSafeSingleton.class) {
+</code></pre><h3 id="6-静态内部类实现单例"><a href="#6-静态内部类实现单例" class="headerlink" title="6.静态内部类实现单例"></a>6.静态内部类实现单例</h3><p>在Java 5之前，Java内存模型存在很多问题，以上方法在某些情况下失败，因为太多的线程试图同时获得Singleton类的实例。所以Bill Pugh提出了一种使用内部静态帮助类来创建Singleton类的另一种方法。Bill Pugh Singleton的实现是这样的</p>
+<pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+/**
+ * @Description 静态内部类实现单例
+ * @author hexsmith
+ * @date 2018年5月9日 下午3:44:11
+ * @version v1.0
+ */
+public class BillPughSingleton {
+
+    private BillPughSingleton() {}
+
+    private static class singletonHelper {
+        private static final BillPughSingleton instance = new BillPughSingleton();
+    }
+
+    public static BillPughSingleton getInstance() {
+        return singletonHelper.instance;
+    }
+
+}
+</code></pre><p>注意包含单例类的实例的私有内部静态类。加载单例类时，SingletonHelper类不会加载到内存中，只有当有人调用getInstance方法时，才会加载此类，并创建Singleton类实例。这是Singleton类最广泛使用的方法，因为它不需要同步。</p>
+<h3 id="7-线程安全的单例模式"><a href="#7-线程安全的单例模式" class="headerlink" title="7.线程安全的单例模式"></a>7.线程安全的单例模式</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+/**
+ * @Description:线程安全的单例
+ * @author hexsmith
+ * @date 2017年11月6日 下午6:50:00
+ * @version v1.0
+ */
+public class ThreadSafeSingleton {
+
+    private static ThreadSafeSingleton instance;
+
+    private ThreadSafeSingleton() {
+    }
+
+    public static synchronized ThreadSafeSingleton getInstance() {
         if (instance == null) {
             instance = new ThreadSafeSingleton();
         }
+        return instance;
+    }
+
+    public static ThreadSafeSingleton getInstanceUsingDoubleLocking() {
+        if (instance == null) {
+            synchronized (ThreadSafeSingleton.class) {
+                if (instance == null) {
+                    instance = new ThreadSafeSingleton();
+                }
+            }
+        }
+        return instance;
     }
 }
-return instance;
-</code></pre><p> }<br>}<br>这种方式实现了线程安全的单例模式，但是在高并发场合使用时性能很糟糕。所以不推荐在高并发环境中使用</p>
-<h3 id="8-单例模式序列化"><a href="#8-单例模式序列化" class="headerlink" title="8.单例模式序列化"></a>8.单例模式序列化</h3></li>
-</ul>
-<p>package com.hexsmith.design.pattern.creational.singleton;</p>
-<p>import java.io.Serializable;</p>
-<p>/**</p>
-<ul>
-<li>@Description 单例模式序列化</li>
-<li>@author hexsmith</li>
-<li>@date 2018年5月9日 下午4:16:19</li>
-<li><p>@version v1.0<br>*/<br>public class SerializedSingleton implements Serializable {</p>
-<p> /**</p>
-<ul>
-<li><p>序列号<br>*/<br>private static final long serialVersionUID = -7308821136820448697L;</p>
-<p>private SerializedSingleton(){}</p>
-<p>private static class SingletonHelper{<br> private static final SerializedSingleton instance = new SerializedSingleton();<br>}</p>
-<p>protected Object readResolve() {<br> return getInstance();<br>}</p>
-<p>public static SerializedSingleton getInstance(){<br> return SingletonHelper.instance;<br>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="9-使用反射破坏单例模式"><a href="#9-使用反射破坏单例模式" class="headerlink" title="9.使用反射破坏单例模式"></a>9.使用反射破坏单例模式</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+</code></pre><p>这种方式实现了线程安全的单例模式，但是在高并发场合使用时性能很糟糕。所以不推荐在高并发环境中使用</p>
+<h3 id="8-单例模式序列化"><a href="#8-单例模式序列化" class="headerlink" title="8.单例模式序列化"></a>8.单例模式序列化</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
+
+import java.io.Serializable;
+
+/**
+ * @Description 单例模式序列化
+ * @author hexsmith
+ * @date 2018年5月9日 下午4:16:19
+ * @version v1.0
+ */
+public class SerializedSingleton implements Serializable {
+
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = -7308821136820448697L;
+
+    private SerializedSingleton(){}
+
+    private static class SingletonHelper{
+        private static final SerializedSingleton instance = new SerializedSingleton();
+    }
+
+    protected Object readResolve() {
+        return getInstance();
+    }
+
+    public static SerializedSingleton getInstance(){
+        return SingletonHelper.instance;
+    }
+
+}
+</code></pre><h3 id="9-使用反射破坏单例模式"><a href="#9-使用反射破坏单例模式" class="headerlink" title="9.使用反射破坏单例模式"></a>9.使用反射破坏单例模式</h3><pre><code>package com.hexsmith.design.pattern.creational.singleton;
 
 import java.lang.reflect.Constructor;
 
