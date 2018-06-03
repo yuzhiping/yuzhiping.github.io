@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[design-patterns]]></title>
+    <url>%2F2018%2F06%2F03%2Fdesign-patterns%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[design-pattern-singleton]]></title>
     <url>%2F2018%2F06%2F01%2Fsingleton%2F</url>
     <content type="text"><![CDATA[]]></content>
