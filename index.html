@@ -175,6 +175,106 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gradle-local-and-remoting-repositories" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/12/gradle-local-and-remoting-repositories/">gradle_local_and_remoting_repositories</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/12/gradle-local-and-remoting-repositories/" class="archive-article-date">
+  	<time datetime="2018-06-12T15:41:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="1、本地仓库"><a href="#1、本地仓库" class="headerlink" title="1、本地仓库"></a>1、本地仓库<p>配置环境变量<code>GRADLE_USER_HOME</code>，并指向你的一个本地目录，用来保存Gradle下载的依赖包。通常我们配置成和<code>Maven</code>同一个本地路径<br><a href="/uploads/img/gradle_local_resp.png" title="gradle本地仓库" class="gallery-item"><img src="/uploads/img/gradle_local_resp.png" alt="gradle本地仓库"></a></p>
+<h3 id="2、远程仓库"><a href="#2、远程仓库" class="headerlink" title="2、远程仓库"></a>2、远程仓库</h3><p>一般Gradle、maven从中央仓库<code>mavenCentral（）</code> <a href="http://repo1.maven.org/maven2/" target="_blank" rel="external">http://repo1.maven.org/maven2/</a>下载依赖包，但是在国内下载速度巨慢，我们只能使用国内的镜像。<br>所以每个Gradle构建的项目中，我们可以在build.gradle做如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    maven &#123;</div><div class="line">        url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</div><div class="line">    &#125;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>每个项目都如此配置难免麻烦些，我们可以配置一个全局配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.gradle\init.gradle</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">allprojects&#123;</div><div class="line">    repositories &#123;</div><div class="line">        def REPOSITORY_URL = &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</div><div class="line">        all &#123; ArtifactRepository repo -&gt;</div><div class="line">            if(repo instanceof MavenArtifactRepository)&#123;</div><div class="line">                def url = repo.url.toString()</div><div class="line">                if (url.startsWith(&apos;https://repo1.maven.org/maven2&apos;) || url.startsWith(&apos;https://jcenter.bintray.com/&apos;)) &#123;</div><div class="line">                    project.logger.lifecycle &quot;Repository $&#123;repo.url&#125; replaced by $REPOSITORY_URL.&quot;</div><div class="line">                    remove repo</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        maven &#123;</div><div class="line">            url REPOSITORY_URL</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="/uploads/img/20170712202941878.png" title="gradle远程仓库" class="gallery-item"><img src="/uploads/img/20170712202941878.png" alt="gradle远程仓库"></a></p>
+<p>###3、init.gradle简介<br>init.gradle文件在build开始之前执行，所以你可以在这个文件配置一些你想预先加载的操作<br>例如配置build日志输出、配置你的机器信息，比如jdk安装目录，配置在build时必须个人信息，比如仓库或者数据库的认证信息，and so on.</p>
+<p>启用init.gradle文件的方法： </p>
+<ol>
+<li>在命令行指定文件，例如：gradle –init-script yourdir/init.gradle -q taskName.你可以多次输入此命令来指定多个init文件 </li>
+<li>把init.gradle文件放到USER_HOME/.gradle/ 目录下. </li>
+<li>把以.gradle结尾的文件放到USER_HOME/.gradle/init.d/ 目录下. </li>
+<li>把以.gradle结尾的文件放到GRADLE_HOME/init.d/ 目录下.</li>
+</ol>
+<p>如果存在上面的4种方式的2种以上，gradle会按上面的1-4序号依次执行这些文件，如果给定目录下存在多个init脚本，会按拼音a-z顺序执行这些脚本<br>类似于build.gradle脚本，init脚本有时groovy语言脚本。每个init脚本都存在一个对应的gradle实例，你在这个文件中调用的所有方法和属性，都会<br>委托给这个gradle实例，每个init脚本都实现了Script接口</p>
+<p>下面的例子是在build执行之前给所有的项目制定maven本地库，这个例子同时在 build.gradle文件指定了maven的仓库中心，注意它们之间异同</p>
+<p>build.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">task showRepos &lt;&lt; &#123;</div><div class="line">    println &quot;All repos:&quot;</div><div class="line">    println repositories.collect &#123; it.name &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>init.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">    repositories &#123;</div><div class="line">        mavenLocal()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在命令行输入命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle –init-script init.gradle -q showRepos</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; gradle --init-script init.gradle -q showRepos</div><div class="line">All repos:</div><div class="line">[MavenLocal, MavenRepo]</div></pre></td></tr></table></figure></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+      
+
+      
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">构建工具, gradle</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/12/gradle-local-and-remoting-repositories/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-design-patterns" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -569,6 +669,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">构建工具, gradle</a>
               </li>
             
             <div class="clearfix"></div>

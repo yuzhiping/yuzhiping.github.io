@@ -8,18 +8,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hexsmith.site">
-  <title>Archives: 2017/9 | Hexsmith&#39;s blog</title>
+  <title>gradle_local_and_remoting_repositories | Hexsmith&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="你虽出身平凡，但终将卓尔不凡！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexsmith&#39;s blog">
-<meta property="og:url" content="http://hexsmith.site/archives/2017/09/index.html">
+  <meta name="keywords" content="构建工具，gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gradle_local_and_remoting_repositories">
+<meta property="og:url" content="http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/index.html">
 <meta property="og:site_name" content="Hexsmith&#39;s blog">
-<meta property="og:description" content="你虽出身平凡，但终将卓尔不凡！">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://hexsmith.site/uploads/img/gradle_local_resp.png">
+<meta property="og:image" content="http://hexsmith.site/uploads/img/20170712202941878.png">
+<meta property="og:updated_time" content="2018-06-12T16:01:53.947Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexsmith&#39;s blog">
-<meta name="twitter:description" content="你虽出身平凡，但终将卓尔不凡！">
+<meta name="twitter:title" content="gradle_local_and_remoting_repositories">
+<meta name="twitter:image" content="http://hexsmith.site/uploads/img/gradle_local_resp.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexsmith&#39;s blog" type="application/atom+xml">
   
@@ -173,49 +175,307 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-gradle-local-and-remoting-repositories" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/08/hello-world/" class="archive-article-date">
-  	<time datetime="2017-09-08T14:53:00.435Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/08/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      gradle_local_and_remoting_repositories
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/06/12/gradle-local-and-remoting-repositories/" class="archive-article-date">
+  	<time datetime="2018-06-12T15:41:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="1、本地仓库"><a href="#1、本地仓库" class="headerlink" title="1、本地仓库"></a>1、本地仓库<p>配置环境变量<code>GRADLE_USER_HOME</code>，并指向你的一个本地目录，用来保存Gradle下载的依赖包。通常我们配置成和<code>Maven</code>同一个本地路径<br><a href="/uploads/img/gradle_local_resp.png" title="gradle本地仓库" class="gallery-item"><img src="/uploads/img/gradle_local_resp.png" alt="gradle本地仓库"></a></p>
+<h3 id="2、远程仓库"><a href="#2、远程仓库" class="headerlink" title="2、远程仓库"></a>2、远程仓库</h3><p>一般Gradle、maven从中央仓库<code>mavenCentral（）</code> <a href="http://repo1.maven.org/maven2/" target="_blank" rel="external">http://repo1.maven.org/maven2/</a>下载依赖包，但是在国内下载速度巨慢，我们只能使用国内的镜像。<br>所以每个Gradle构建的项目中，我们可以在build.gradle做如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    maven &#123;</div><div class="line">        url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</div><div class="line">    &#125;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>每个项目都如此配置难免麻烦些，我们可以配置一个全局配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.gradle\init.gradle</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">allprojects&#123;</div><div class="line">    repositories &#123;</div><div class="line">        def REPOSITORY_URL = &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</div><div class="line">        all &#123; ArtifactRepository repo -&gt;</div><div class="line">            if(repo instanceof MavenArtifactRepository)&#123;</div><div class="line">                def url = repo.url.toString()</div><div class="line">                if (url.startsWith(&apos;https://repo1.maven.org/maven2&apos;) || url.startsWith(&apos;https://jcenter.bintray.com/&apos;)) &#123;</div><div class="line">                    project.logger.lifecycle &quot;Repository $&#123;repo.url&#125; replaced by $REPOSITORY_URL.&quot;</div><div class="line">                    remove repo</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        maven &#123;</div><div class="line">            url REPOSITORY_URL</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="/uploads/img/20170712202941878.png" title="gradle远程仓库" class="gallery-item"><img src="/uploads/img/20170712202941878.png" alt="gradle远程仓库"></a></p>
+<p>###3、init.gradle简介<br>init.gradle文件在build开始之前执行，所以你可以在这个文件配置一些你想预先加载的操作<br>例如配置build日志输出、配置你的机器信息，比如jdk安装目录，配置在build时必须个人信息，比如仓库或者数据库的认证信息，and so on.</p>
+<p>启用init.gradle文件的方法： </p>
+<ol>
+<li>在命令行指定文件，例如：gradle –init-script yourdir/init.gradle -q taskName.你可以多次输入此命令来指定多个init文件 </li>
+<li>把init.gradle文件放到USER_HOME/.gradle/ 目录下. </li>
+<li>把以.gradle结尾的文件放到USER_HOME/.gradle/init.d/ 目录下. </li>
+<li>把以.gradle结尾的文件放到GRADLE_HOME/init.d/ 目录下.</li>
+</ol>
+<p>如果存在上面的4种方式的2种以上，gradle会按上面的1-4序号依次执行这些文件，如果给定目录下存在多个init脚本，会按拼音a-z顺序执行这些脚本<br>类似于build.gradle脚本，init脚本有时groovy语言脚本。每个init脚本都存在一个对应的gradle实例，你在这个文件中调用的所有方法和属性，都会<br>委托给这个gradle实例，每个init脚本都实现了Script接口</p>
+<p>下面的例子是在build执行之前给所有的项目制定maven本地库，这个例子同时在 build.gradle文件指定了maven的仓库中心，注意它们之间异同</p>
+<p>build.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">task showRepos &lt;&lt; &#123;</div><div class="line">    println &quot;All repos:&quot;</div><div class="line">    println repositories.collect &#123; it.name &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>init.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">    repositories &#123;</div><div class="line">        mavenLocal()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在命令行输入命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle –init-script init.gradle -q showRepos</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; gradle --init-script init.gradle -q showRepos</div><div class="line">All repos:</div><div class="line">[MavenLocal, MavenRepo]</div></pre></td></tr></table></figure></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+      
 
+      
+          <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+      
+
+      
+        <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style type="text/css">
+.my_post_copyright {
+  width: 85%;
+  max-width: 45em;
+  margin: 2.8em auto 0;
+  padding: 0.5em 1.0em;
+  border: 1px solid #d3d3d3;
+  font-size: 0.93rem;
+  line-height: 1.6em;
+  word-break: break-all;
+  background: rgba(255,255,255,0.4);
+}
+.my_post_copyright p{margin:0;}
+.my_post_copyright span {
+  display: inline-block;
+  width: 5.2em;
+  color: #b5b5b5;
+  font-weight: bold;
+}
+.my_post_copyright .raw {
+  margin-left: 1em;
+  width: 5em;
+}
+.my_post_copyright a {
+  color: #808080;
+  border-bottom:0;
+}
+.my_post_copyright a:hover {
+  color: #a3d2a3;
+  text-decoration: underline;
+}
+.my_post_copyright:hover .fa-clipboard {
+  color: #000;
+}
+.my_post_copyright .post-url:hover {
+  font-weight: normal;
+}
+.my_post_copyright .copy-path {
+  margin-left: 1em;
+  width: 1em;
+  +mobile(){display:none;}
+}
+.my_post_copyright .copy-path:hover {
+  color: #808080;
+  cursor: pointer;
+}
+</style>
+<div class="my_post_copyright">
+	<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <p><span>本文标题:</span><a href="/2018/06/12/gradle-local-and-remoting-repositories/" target="_blank" title="gradle_local_and_remoting_repositories">gradle_local_and_remoting_repositories</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Hexsmith 的个人博客" target="_blank">Hexsmith</a></p>
+  <p><span>发布时间:</span>2018年06月12日 - 23:06</p>
+  <p><span>最后更新:</span>2018年06月13日 - 00:06</p>
+  <p><span>原始链接:</span><a href="/2018/06/12/gradle-local-and-remoting-repositories/" target="_blank" title="gradle_local_and_remoting_repositories">http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+</div>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>您的支持将鼓励我继续创作！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/uploads/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/uploads/weixinpay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">构建工具, gradle</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/06/03/design-patterns/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">design-patterns</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#2、远程仓库"><span class="toc-number">1.</span> <span class="toc-text">2、远程仓库</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="gradle-local-and-remoting-repositories" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cysWzgCsj",
+        conf: "a8f74927c9fd6a8c6bafa67d213bc493"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -238,8 +498,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

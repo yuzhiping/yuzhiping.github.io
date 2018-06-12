@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[gradle_local_and_remoting_repositories]]></title>
+    <url>%2F2018%2F06%2F12%2Fgradle-local-and-remoting-repositories%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>构建工具, gradle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[design-patterns]]></title>
     <url>%2F2018%2F06%2F03%2Fdesign-patterns%2F</url>
     <content type="text"><![CDATA[]]></content>
