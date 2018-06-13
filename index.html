@@ -2,24 +2,29 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
 
 
 
@@ -32,7 +37,6 @@
 
 
 
-  <meta name="google-site-verification" content="VIOhD9FBEApHg5OIrls9Ff3H1x6XSlXOX0u0GOgKJ5I" />
 
 
 
@@ -45,11 +49,6 @@
 
 
 
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -59,38 +58,57 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Hexsmith's blog" type="application/atom+xml" />
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
 
 
 
 
 
 
-<meta name="description" content="你虽出身平凡，但终将卓尔不凡！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="你虽出身平凡，但终将卓尔不凡！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hexsmith&#39;s blog">
 <meta property="og:url" content="http://hexsmith.site/index.html">
@@ -103,29 +121,8 @@
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+  <link rel="alternate" href="/atom.xml" title="Hexsmith's blog" type="application/atom+xml" />
+
 
 
 
@@ -133,7 +130,11 @@
 
 
 
-
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
 
   <title>Hexsmith's blog</title>
   
@@ -142,18 +143,36 @@
 
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?3501a546f6cb5fc0dbf643d49e64cef7";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 
 
 
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
 
 </head>
 
@@ -167,8 +186,6 @@
   <div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
-	<a href="https://github.com/yuzhiping">
-	<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -176,19 +193,21 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Hexsmith's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+    
       
         <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随！</p>
       
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -196,82 +215,58 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
+        
+          
+          <li class="menu-item menu-item-home menu-item-active">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
 
   
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
+    
 
+  
 
-
-    </div>
   
 </nav>
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -284,6 +279,8 @@
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -293,8 +290,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hexsmith">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/beaver-head.png">
+      <meta itemprop="description" content="你虽出身平凡，但终将卓尔不凡！">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -308,25 +305,40 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/13/在IDE后台打印GC日志/" itemprop="url">在IDE后台打印GC日志</a></h1>
+                <a class="post-title-link" href="/2018/06/13/在IDE后台打印GC日志/" itemprop="url">
+                  在IDE后台打印GC日志
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T22:11:01+08:00">
-                2018-06-13
-              </time>
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-13 22:11:01 / Updated at: 23:18:07" itemprop="dateCreated datePublished" datetime="2018-06-13T22:11:01+08:00">2018-06-13</time>
             
 
             
+              
 
+              
             
           </span>
 
@@ -341,7 +353,7 @@
               </span>
               
                 <a href="/2018/06/13/在IDE后台打印GC日志/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://hexsmith.site/2018/06/13/在IDE后台打印GC日志/" class="cy_cmt_count" data-xid="2018/06/13/在IDE后台打印GC日志/" itemprop="commentsCount" ></span>
+                  <span class="post-meta-item-text">Comments: </span> <span id="url::http://hexsmith.site/2018/06/13/在IDE后台打印GC日志/" class="cy_cmt_count" data-xid="2018/06/13/在IDE后台打印GC日志/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -352,37 +364,6 @@
 
           
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,117
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
           
 
           
@@ -402,33 +383,110 @@
       
         
           
-          前言学习JVM，阅读GC日志是处理Java虚拟机内存问题的基础技能，它只是一些人为确定的规则，没有太多技术含量。
-既然如此，那么在IDE的控制台打印GC日志是必不可少的了。现在就告诉你怎么打印。
-Eclipse配置打印GC日志
-
-在上图的箭头处加上-XX:+PrintGCDetails这句话。于是，
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/13/在IDE后台打印GC日志/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言<p>学习JVM，阅读GC日志是处理Java虚拟机内存问题的基础技能，它只是一些人为确定的规则，没有太多技术含量。</p>
+<p>既然如此，那么在IDE的控制台打印GC日志是必不可少的了。现在就告诉你怎么打印。</p>
+<h4 id="Eclipse配置打印GC日志"><a href="#Eclipse配置打印GC日志" class="headerlink" title="Eclipse配置打印GC日志"></a>Eclipse配置打印GC日志</h4><p><a href="http://images0.cnblogs.com/blog/641601/201508/171129239884226.png" title="配置打印参数" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129239884226.png" alt="配置打印参数"></a></p>
+<p><a href="http://images0.cnblogs.com/blog/641601/201508/171129257698181.png" title="配置打印GC日志参数" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129257698181.png" alt="配置打印GC日志参数"></a></p>
+<p>在上图的箭头处加上-XX:+PrintGCDetails这句话。于是，运行程序后，GC日志就可以打印出来了：</p>
+<p><a href="/uploads/img/20180613222615.png" title="控制台输出的GC日志" class="gallery-item"><img src="/uploads/img/20180613222615.png" alt="控制台输出的GC日志"></a></p>
+<h4 id="IntelliJ-IDEA-配置打印GC日志"><a href="#IntelliJ-IDEA-配置打印GC日志" class="headerlink" title="IntelliJ IDEA 配置打印GC日志"></a>IntelliJ IDEA 配置打印GC日志</h4><p><a href="http://images0.cnblogs.com/blog/641601/201508/171129297858722.png" title="配置步骤" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129297858722.png" alt="配置步骤"></a></p>
+<p><a href="http://images0.cnblogs.com/blog/641601/201508/171129312389478.png" title="配置VM参数" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129312389478.png" alt="配置VM参数"></a></p>
+<p>在上图的箭头处加上-XX:+PrintGCDetails这句话。于是，运行程序后，GC日志就可以打印出来了：</p>
+<p><a href="/uploads/img/20180613224136.png" title="控制台输出GC日志" class="gallery-item"><img src="/uploads/img/20180613224136.png" alt="控制台输出GC日志"></a></p>
+<p>当然了，光有<code>-XX:+PrintGCDetails</code>这一句参数肯定是不够的，下面我们详细介绍一下更多的参数配置。</p>
+<h4 id="一、Trace跟踪参数："><a href="#一、Trace跟踪参数：" class="headerlink" title="一、Trace跟踪参数："></a>一、Trace跟踪参数：</h4><ol>
+<li>打印GC的简要信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-verbose:gc</span><br><span class="line">-XX:+printGC</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>解释：可以打印GC的简要信息。比如：</p>
+<p>[GC 4790K-&gt;374K(15872K), 0.0001606 secs]</p>
+<p>[GC 4790K-&gt;374K(15872K), 0.0001474 secs]</p>
+<p>[GC 4790K-&gt;374K(15872K), 0.0001563 secs]</p>
+<p>[GC 4790K-&gt;374K(15872K), 0.0001682 secs]</p>
+<p>上方日志的意思是说，GC之前，用了4M左右的内存，GC之后，用了374K内存，一共回收了将近4M。内存大小一共是16M左右。</p>
+<ol start="2">
+<li>打印GC的详细信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>解释：打印GC详细信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintGCTimeStamps</span><br></pre></td></tr></table></figure></p>
+<p>解释：打印CG发生的时间戳。<br>理解GC日志的含义：</p>
+<p>例如下面这段日志：</p>
+<p>[GC[DefNew: 4416K-&gt;0K(4928K), 0.0001897 secs] 4790K-&gt;374K(15872K), 0.0002232 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] </p>
+<p>上方日志的意思是说：这是一个新生代的GC。方括号内部的“4416K-&gt;0K(4928K)”含义是：“GC前该内存区域已使用容量-&gt;GC后该内存区域已使用容量（该内存区域总容量）”。而在方括号之外的“4790K-&gt;374K(15872K)”表示“GC前Java堆已使用容量-&gt;GC后Java堆已使用容量（Java堆总容量）”。</p>
+<p>再往后看，“0.0001897 secs”表示该内存区域GC所占用的时间，单位是秒。</p>
+<p>再比如下面这段GC日志：</p>
+<p><a href="http://images0.cnblogs.com/blog/641601/201508/171129348949360.png" title="enter description here" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129348949360.png" alt="enter description here"></a></p>
+<p>上图中，我们先看一下用红框标注的“[0x27e80000, 0x28d80000, 0x28d80000)”的含义，它表示新生代在内存当中的位置：第一个参数是申请到的起始位置，第二个参数是申请到的终点位置，第三个参数表示最多能申请到的位置。上图中的例子表示新生代申请到了15M的控件，而这个15M是等于：（eden space的12288K）+（from space的1536K）+（to space的1536K）。</p>
+<p>疑问：分配到的新生代有15M，但是可用的只有13824K，为什么会有这个差异呢？等我们在后面的文章中学习到了GC算法之后就明白了。</p>
+<ol start="3">
+<li>指定GC log的位置：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xloggc:log/gc.log</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>解释：指定GC log的位置，以文件输出。帮助开发人员分析问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintHeapAtGC</span><br></pre></td></tr></table></figure>
+<p>解释：每一次GC前和GC后，都打印堆信息。</p>
+<p><a href="http://images0.cnblogs.com/blog/641601/201508/171129379106073.png" title="堆栈信息" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129379106073.png" alt="堆栈信息"></a></p>
+<p>上图中，红框部分正好是一次GC，红框部分的前面是GC之前的日志，红框部分的后面是GC之后的日志。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+TraceClassLoading</span><br></pre></td></tr></table></figure>
+<p>解释：监控类的加载。</p>
+<p>例如：</p>
+<blockquote>
+<p>[Loaded java.lang.Object from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.io.Serializable from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.lang.Comparable from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.lang.CharSequence from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.lang.String from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.lang.reflect.GenericDeclaration from shared objects file]</p>
+</blockquote>
+<blockquote>
+<p>[Loaded java.lang.reflect.Type from shared objects file]</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintClassHistogram</span><br></pre></td></tr></table></figure>
+<p>解释：按下Ctrl+Break后，打印类的信息。</p>
+<p>例如：</p>
+<p><a href="http://images0.cnblogs.com/blog/641601/201508/171129389254130.png" title="打印类信息" class="gallery-item" target="_blank" rel="noopener"><img src="http://images0.cnblogs.com/blog/641601/201508/171129389254130.png" alt="打印类信息"></a></p>
+<h4 id="二、堆的分配参数："><a href="#二、堆的分配参数：" class="headerlink" title="二、堆的分配参数："></a>二、堆的分配参数：</h4><ol>
+<li><p>-Xmx –Xms：指定最大堆和最小堆<br> 举例、当参数设置为如下时：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xmx20m -Xms5m</span><br></pre></td></tr></table></figure>
+<p> 然后我们在程序中运行如下代码：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 系统的最大空间</span></span><br><span class="line">   System.out.println(<span class="string">"Xmx="</span> + Runtime.getRuntime().maxMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 系统的空闲空间</span></span><br><span class="line">   System.out.println(<span class="string">"free mem="</span> + Runtime.getRuntime().freeMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 当前可用的总空间</span></span><br><span class="line">   System.out.println(<span class="string">"total mem="</span> + Runtime.getRuntime().totalMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br></pre></td></tr></table></figure>
+<p> 运行效果：<br> <a href="/uploads/img/20180613230315.png" title="打印堆信息" class="gallery-item"><img src="/uploads/img/20180613230315.png" alt="打印堆信息"></a></p>
+<p> 保持参数不变，在程序中运行如下代码：（分配1M空间给数组）</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">      </span><br><span class="line">      System.out.println(<span class="string">"分配了1M空间给数组"</span>);</span><br></pre></td></tr></table></figure>
+<p> 运行效果：<br> <a href="/uploads/img/20180613231033.png" title="enter description here" class="gallery-item"><img src="/uploads/img/20180613231033.png" alt="enter description here"></a></p>
+<p> 注：Java会尽可能将total mem的值维持在最小堆。</p>
+<p> 保持参数不变，在程序中运行如下代码：（分配10M空间给数组）</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">byte[] b = new byte[10 * 1024 * 1024];</span><br><span class="line">System.out.println(&quot;分配了10M空间给数组&quot;);</span><br></pre></td></tr></table></figure>
+<p> 运行效果：<br> <a href="/uploads/img/20180613231333.png" title="enter description here" class="gallery-item"><img src="/uploads/img/20180613231333.png" alt="enter description here"></a></p>
+<p> 保持参数不变，在程序中运行如下代码：（进行一次GC的回收）</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.gc();</span><br></pre></td></tr></table></figure></li>
+</ol>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+          
         
       
     </div>
+
+    
+
     
     
     
-	
-	<div>
-      
-	</div>
-	
-	<div>
-	  
-	</div>
 
     
 
@@ -464,6 +522,8 @@ Eclipse配置打印GC日志
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -473,8 +533,8 @@ Eclipse配置打印GC日志
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hexsmith">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/beaver-head.png">
+      <meta itemprop="description" content="你虽出身平凡，但终将卓尔不凡！">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -488,25 +548,52 @@ Eclipse配置打印GC日志
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/12/gradle-local-and-remoting-repositories/" itemprop="url">gradle_local_and_remoting_repositories</a></h1>
+                <a class="post-title-link" href="/2018/06/12/gradle-local-and-remoting-repositories/" itemprop="url">
+                  gradle_local_and_remoting_repositories
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T23:41:53+08:00">
-                2018-06-12
-              </time>
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-12 23:41:53" itemprop="dateCreated datePublished" datetime="2018-06-12T23:41:53+08:00">2018-06-12</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-06-13 00:14:09" itemprop="dateModified" datetime="2018-06-13T00:14:09+08:00">2018-06-13</time>
+              
             
           </span>
 
@@ -521,7 +608,7 @@ Eclipse配置打印GC日志
               </span>
               
                 <a href="/2018/06/12/gradle-local-and-remoting-repositories/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/" class="cy_cmt_count" data-xid="2018/06/12/gradle-local-and-remoting-repositories/" itemprop="commentsCount" ></span>
+                  <span class="post-meta-item-text">Comments: </span> <span id="url::http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories/" class="cy_cmt_count" data-xid="2018/06/12/gradle-local-and-remoting-repositories/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -532,37 +619,6 @@ Eclipse配置打印GC日志
 
           
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  672
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
           
 
           
@@ -582,31 +638,43 @@ Eclipse配置打印GC日志
       
         
           
-          1、本地仓库配置环境变量GRADLE_USER_HOME，并指向你的一个本地目录，用来保存Gradle下载的依赖包。通常我们配置成和Maven同一个本地路径
-
-2、远程仓库一般Gradle、maven从中央仓库mavenCentral（） http://repo1.maven.org/maven2/
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/12/gradle-local-and-remoting-repositories/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="1、本地仓库"><a href="#1、本地仓库" class="headerlink" title="1、本地仓库"></a>1、本地仓库<p>配置环境变量<code>GRADLE_USER_HOME</code>，并指向你的一个本地目录，用来保存Gradle下载的依赖包。通常我们配置成和<code>Maven</code>同一个本地路径</p>
+<p><a href="/uploads/img/gradle_local_resp.png" title="gradle本地仓库" class="gallery-item"><img src="/uploads/img/gradle_local_resp.png" alt="gradle本地仓库"></a></p>
+<h3 id="2、远程仓库"><a href="#2、远程仓库" class="headerlink" title="2、远程仓库"></a>2、远程仓库</h3><p>一般Gradle、maven从中央仓库<code>mavenCentral（）</code> <a href="http://repo1.maven.org/maven2/" target="_blank" rel="noopener">http://repo1.maven.org/maven2/</a>下载依赖包，但是在国内下载速度巨慢，我们只能使用国内的镜像。<br>所以每个Gradle构建的项目中，我们可以在build.gradle做如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    maven &#123;</span><br><span class="line">        url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>每个项目都如此配置难免麻烦些，我们可以配置一个全局配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.gradle\init.gradle</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">allprojects&#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        def REPOSITORY_URL = &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;</span><br><span class="line">        all &#123; ArtifactRepository repo -&gt;</span><br><span class="line">            if(repo instanceof MavenArtifactRepository)&#123;</span><br><span class="line">                def url = repo.url.toString()</span><br><span class="line">                if (url.startsWith(&apos;https://repo1.maven.org/maven2&apos;) || url.startsWith(&apos;https://jcenter.bintray.com/&apos;)) &#123;</span><br><span class="line">                    project.logger.lifecycle &quot;Repository $&#123;repo.url&#125; replaced by $REPOSITORY_URL.&quot;</span><br><span class="line">                    remove repo</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url REPOSITORY_URL</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="/uploads/img/20170712202941878.png" title="gradle远程仓库" class="gallery-item"><img src="/uploads/img/20170712202941878.png" alt="gradle远程仓库"></a></p>
+<h3 id="3、init-gradle简介"><a href="#3、init-gradle简介" class="headerlink" title="3、init.gradle简介"></a>3、init.gradle简介</h3><p>init.gradle文件在build开始之前执行，所以你可以在这个文件配置一些你想预先加载的操作<br>例如配置build日志输出、配置你的机器信息，比如jdk安装目录，配置在build时必须个人信息，比如仓库或者数据库的认证信息，and so on.</p>
+<p>启用init.gradle文件的方法： </p>
+<ol>
+<li>在命令行指定文件，例如：gradle –init-script yourdir/init.gradle -q taskName.你可以多次输入此命令来指定多个init文件 </li>
+<li>把init.gradle文件放到USER_HOME/.gradle/ 目录下. </li>
+<li>把以.gradle结尾的文件放到USER_HOME/.gradle/init.d/ 目录下. </li>
+<li>把以.gradle结尾的文件放到GRADLE_HOME/init.d/ 目录下.</li>
+</ol>
+<p>如果存在上面的4种方式的2种以上，gradle会按上面的1-4序号依次执行这些文件，如果给定目录下存在多个init脚本，会按拼音a-z顺序执行这些脚本<br>类似于build.gradle脚本，init脚本有时groovy语言脚本。每个init脚本都存在一个对应的gradle实例，你在这个文件中调用的所有方法和属性，都会<br>委托给这个gradle实例，每个init脚本都实现了Script接口</p>
+<p>下面的例子是在build执行之前给所有的项目制定maven本地库，这个例子同时在 build.gradle文件指定了maven的仓库中心，注意它们之间异同</p>
+<p>build.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task showRepos &lt;&lt; &#123;</span><br><span class="line">    println &quot;All repos:&quot;</span><br><span class="line">    println repositories.collect &#123; it.name &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>init.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在命令行输入命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle –init-script init.gradle -q showRepos</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; gradle --init-script init.gradle -q showRepos</span><br><span class="line">All repos:</span><br><span class="line">[MavenLocal, MavenRepo]</span><br></pre></td></tr></table></figure>
+<h3 id="4、参考"><a href="#4、参考" class="headerlink" title="4、参考"></a>4、参考</h3><p><a href="https://blog.csdn.net/x_iya/article/details/75040806" target="_blank" rel="noopener">https://blog.csdn.net/x_iya/article/details/75040806</a></p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+          
         
       
     </div>
+
+    
+
     
     
     
-	
-	<div>
-      
-	</div>
-	
-	<div>
-	  
-	</div>
 
     
 
@@ -642,6 +710,8 @@ Eclipse配置打印GC日志
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -651,8 +721,8 @@ Eclipse配置打印GC日志
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hexsmith">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/beaver-head.png">
+      <meta itemprop="description" content="你虽出身平凡，但终将卓尔不凡！">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -666,25 +736,40 @@ Eclipse配置打印GC日志
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/03/design-patterns/" itemprop="url">design-patterns</a></h1>
+                <a class="post-title-link" href="/2018/06/03/design-patterns/" itemprop="url">
+                  design-patterns
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T10:00:55+08:00">
-                2018-06-03
-              </time>
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-03 10:00:55 / Updated at: 10:18:04" itemprop="dateCreated datePublished" datetime="2018-06-03T10:00:55+08:00">2018-06-03</time>
             
 
             
+              
 
+              
             
           </span>
 
@@ -699,7 +784,7 @@ Eclipse配置打印GC日志
               </span>
               
                 <a href="/2018/06/03/design-patterns/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://hexsmith.site/2018/06/03/design-patterns/" class="cy_cmt_count" data-xid="2018/06/03/design-patterns/" itemprop="commentsCount" ></span>
+                  <span class="post-meta-item-text">Comments: </span> <span id="url::http://hexsmith.site/2018/06/03/design-patterns/" class="cy_cmt_count" data-xid="2018/06/03/design-patterns/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -710,37 +795,6 @@ Eclipse配置打印GC日志
 
           
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,031
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
           
 
           
@@ -760,29 +814,52 @@ Eclipse配置打印GC日志
       
         
           
-          设计模式简介设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/03/design-patterns/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h1="" id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介<p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理的运用设计模式可以完美的解决很多问题，每种模式在现在中都有相应的原理来与之对应，每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是它能被广泛应用的原因。本章我们会以理论与实践相结合的方式来进行本章的学习，希望广大程序爱好者，学好设计模式，做一个优秀的软件工程师！</p>
+<h2 id="一、设计模式的分类"><a href="#一、设计模式的分类" class="headerlink" title="一、设计模式的分类"></a>一、设计模式的分类</h2><p>总体来说设计模式分为三大类：</p>
+<p>　　创建型模式，共五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。</p>
+<p>　　结构型模式，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。</p>
+<p>　　行为型模式，共十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</p>
+<p>其实还有两类：并发型模式和线程池模式。用一个图片来整体描述一下：<br><a href="/uploads/img/design-patterns.jpg" title="设计模式之间的关系" class="gallery-item"><img src="/uploads/img/design-patterns.jpg" alt="设计模式之间的关系"></a></p>
+<h2 id="二、设计模式的六大原则"><a href="#二、设计模式的六大原则" class="headerlink" title="二、设计模式的六大原则"></a>二、设计模式的六大原则</h2><ul>
+<li>开闭原则（Open Close Principle）</li>
+</ul>
+<p>　　开闭原则就是说对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。所以一句话概括就是：为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p>
+<ul>
+<li>里氏代换原则（Liskov Substitution Principle）</li>
+</ul>
+<p>　　里氏代换原则(Liskov Substitution Principle LSP)面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。 LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。—— From Baidu 百科</p>
+<ul>
+<li>依赖倒转原则（Dependence Inversion Principle）</li>
+</ul>
+<p>　　这个是开闭原则的基础，具体内容：真对接口编程，依赖于抽象而不依赖于具体。</p>
+<ul>
+<li>接口隔离原则（Interface Segregation Principle）</li>
+</ul>
+<p>　　这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。还是一个降低类之间的耦合度的意思，从这儿我们看出，其实设计模式就是一个软件的设计思想，从大型软件架构出发，为了升级和维护方便。所以上文中多次出现：降低依赖，降低耦合。</p>
+<ul>
+<li>迪米特法则（最少知道原则）（Demeter Principle）</li>
+</ul>
+<p>　　为什么叫最少知道原则，就是说：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。</p>
+<ul>
+<li>合成复用原则（Composite Reuse Principle）</li>
+</ul>
+<p>　　原则是尽量使用合成/聚合的方式，而不是使用继承。</p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+          
         
       
     </div>
+
+    
+
     
     
     
-	
-	<div>
-      
-	</div>
-	
-	<div>
-	  
-	</div>
 
     
 
@@ -818,6 +895,8 @@ Eclipse配置打印GC日志
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -827,8 +906,8 @@ Eclipse配置打印GC日志
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hexsmith">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/beaver-head.png">
+      <meta itemprop="description" content="你虽出身平凡，但终将卓尔不凡！">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -842,25 +921,52 @@ Eclipse配置打印GC日志
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/01/singleton/" itemprop="url">design-pattern-singleton</a></h1>
+                <a class="post-title-link" href="/2018/06/01/singleton/" itemprop="url">
+                  design-pattern-singleton
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T20:51:45+08:00">
-                2018-06-01
-              </time>
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-01 20:51:45" itemprop="dateCreated datePublished" datetime="2018-06-01T20:51:45+08:00">2018-06-01</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-06-03 01:04:35" itemprop="dateModified" datetime="2018-06-03T01:04:35+08:00">2018-06-03</time>
+              
             
           </span>
 
@@ -875,7 +981,7 @@ Eclipse配置打印GC日志
               </span>
               
                 <a href="/2018/06/01/singleton/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://hexsmith.site/2018/06/01/singleton/" class="cy_cmt_count" data-xid="2018/06/01/singleton/" itemprop="commentsCount" ></span>
+                  <span class="post-meta-item-text">Comments: </span> <span id="url::http://hexsmith.site/2018/06/01/singleton/" class="cy_cmt_count" data-xid="2018/06/01/singleton/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -886,37 +992,6 @@ Eclipse配置打印GC日志
 
           
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,350
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
           
 
           
@@ -936,33 +1011,48 @@ Eclipse配置打印GC日志
       
         
           
-          1.单例模式
-单例模式限制了一个类的实例化，并确保java虚拟机中只存在一个类的实例。
-单例类必须提供一个全局访问点来获取类的实例。
-单例模式用于日志记录，驱动程序对象，缓存和线程池。
-Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder，Prototyp
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/01/singleton/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="1-单例模式"><a href="#1-单例模式" class="headerlink" title="1.单例模式"></a>1.单例模式<ul>
+<li>单例模式限制了一个类的实例化，并确保java虚拟机中只存在一个类的实例。</li>
+<li>单例类必须提供一个全局访问点来获取类的实例。</li>
+<li>单例模式用于日志记录，驱动程序对象，缓存和线程池。</li>
+<li>Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder，Prototype，Facade等。</li>
+</ul>
+<h3 id="2-要点"><a href="#2-要点" class="headerlink" title="2.要点"></a>2.要点</h3><ul>
+<li>私有的构造函数</li>
+<li>公共静态方法，返回类的实例，这是外部世界获取单例类的实例的全局访问点。</li>
+</ul>
+<h3 id="3-饿汉式单例"><a href="#3-饿汉式单例" class="headerlink" title="3.饿汉式单例"></a>3.饿汉式单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:饿汉式单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:36:41 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EagerInitializedSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> EagerInitializedSingleton instance = <span class="keyword">new</span> EagerInitializedSingleton();</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">EagerInitializedSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EagerInitializedSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>这种在初始化时，Singleton类的实例是在类加载时创建的，这是创建单例类的最简单的方法，但它有一个缺点即使客户端应用程序可能没有使用它也会创建实例。</p>
+<h3 id="4-懒汉式单例"><a href="#4-懒汉式单例" class="headerlink" title="4.懒汉式单例"></a>4.懒汉式单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:懒汉式单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:47:10 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInitializedSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> LazyInitializedSingleton instance;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">LazyInitializedSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyInitializedSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			instance = <span class="keyword">new</span> LazyInitializedSingleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>上面的实现对单线程环境工作良好，但是当涉及到多线程系统时，如果多个线程同时处于if循环内部，则会导致问题。它会破坏单例模式，两个线程都会得到单例类的不同实例。</p>
+<h3 id="5-静态代码块实现单例"><a href="#5-静态代码块实现单例" class="headerlink" title="5.静态代码块实现单例"></a>5.静态代码块实现单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:使用static代码块实现单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:41:15 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticBlockSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> StaticBlockSingleton instance;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">StaticBlockSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			instance = <span class="keyword">new</span> StaticBlockSingleton();</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Exception occured in creating singleton instance"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StaticBlockSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="6-静态内部类实现单例"><a href="#6-静态内部类实现单例" class="headerlink" title="6.静态内部类实现单例"></a>6.静态内部类实现单例</h3><p>在Java 5之前，Java内存模型存在很多问题，以上方法在某些情况下失败，因为太多的线程试图同时获得Singleton类的实例。所以Bill Pugh提出了一种使用内部静态帮助类来创建Singleton类的另一种方法。Bill Pugh Singleton的实现是这样的<br>    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 静态内部类实现单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午3:44:11</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BillPughSingleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">BillPughSingleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">singletonHelper</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BillPughSingleton instance = <span class="keyword">new</span> BillPughSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BillPughSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singletonHelper.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意包含单例类的实例的私有内部静态类。加载单例类时，SingletonHelper类不会加载到内存中，只有当有人调用getInstance方法时，才会加载此类，并创建Singleton类实例。这是Singleton类最广泛使用的方法，因为它不需要同步。</p>
+<h3 id="7-线程安全的单例模式"><a href="#7-线程安全的单例模式" class="headerlink" title="7.线程安全的单例模式"></a>7.线程安全的单例模式</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:线程安全的单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:50:00</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadSafeSingleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ThreadSafeSingleton instance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">ThreadSafeSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> ThreadSafeSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			instance = <span class="keyword">new</span> ThreadSafeSingleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadSafeSingleton <span class="title">getInstanceUsingDoubleLocking</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (ThreadSafeSingleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">					instance = <span class="keyword">new</span> ThreadSafeSingleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>这种方式实现了线程安全的单例模式，但是在高并发场合使用时性能很糟糕。所以不推荐在高并发环境中使用</p>
+<h3 id="8-单例模式序列化"><a href="#8-单例模式序列化" class="headerlink" title="8.单例模式序列化"></a>8.单例模式序列化</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 单例模式序列化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午4:16:19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializedSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 序列号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">7308821136820448697L</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SerializedSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHelper</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SerializedSingleton instance = <span class="keyword">new</span> SerializedSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">readResolve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializedSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHelper.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="9-使用反射破坏单例模式"><a href="#9-使用反射破坏单例模式" class="headerlink" title="9.使用反射破坏单例模式"></a>9.使用反射破坏单例模式</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 使用反射破坏单例模式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午4:01:41</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectionSingletonTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"rawtypes"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        EagerInitializedSingleton instanceOne = EagerInitializedSingleton.getInstance();</span><br><span class="line">        EagerInitializedSingleton instanceTwo = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Constructor[] constructors = EagerInitializedSingleton.class.getDeclaredConstructors();</span><br><span class="line">            <span class="keyword">for</span>(Constructor constructor : constructors) &#123;</span><br><span class="line">                <span class="comment">// Below code will destroy the singleton pattern</span></span><br><span class="line">                constructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                instanceTwo = (EagerInitializedSingleton)constructor.newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(instanceOne.hashCode());</span><br><span class="line">        System.out.println(instanceTwo.hashCode());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="10-枚举单例"><a href="#10-枚举单例" class="headerlink" title="10.枚举单例"></a>10.枚举单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 枚举方式的单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午3:58:33</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EnumSingleton &#123;</span><br><span class="line"></span><br><span class="line">    INSTANCE;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>为了克服Reflection的这种情况，Joshua Bloch建议使用Enum来实现Singleton设计模式，因为Java确保任何枚举值在Java程序中仅实例化一次。由于Java Enum值是全局访问的，单例也是全局可访问的。缺点是枚举类型有点不灵活; 例如，它不允许延迟初始化</p>
+<h3 id="11-参考资料"><a href="#11-参考资料" class="headerlink" title="11.参考资料"></a>11.参考资料</h3><ul>
+<li><a href="https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples" target="_blank" rel="noopener">https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples</a></li>
+</ul>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+          
         
       
     </div>
+
+    
+
     
     
     
-	
-	<div>
-      
-	</div>
-	
-	<div>
-	  
-	</div>
 
     
 
@@ -998,6 +1088,8 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -1007,8 +1099,8 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hexsmith">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/beaver-head.png">
+      <meta itemprop="description" content="你虽出身平凡，但终将卓尔不凡！">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1022,23 +1114,34 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/08/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2017/09/08/hello-world/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-08T22:53:00+08:00">
-                2017-09-08
-              </time>
-            
 
+              
+                
+              
+
+              <time title="Post created: 2017-09-08 22:53:00" itemprop="dateCreated datePublished" datetime="2017-09-08T22:53:00+08:00">2017-09-08</time>
             
 
             
@@ -1055,7 +1158,7 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
               </span>
               
                 <a href="/2017/09/08/hello-world/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://hexsmith.site/2017/09/08/hello-world/" class="cy_cmt_count" data-xid="2017/09/08/hello-world/" itemprop="commentsCount" ></span>
+                  <span class="post-meta-item-text">Comments: </span> <span id="url::http://hexsmith.site/2017/09/08/hello-world/" class="cy_cmt_count" data-xid="2017/09/08/hello-world/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -1066,37 +1169,6 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
           
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  78
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
           
 
           
@@ -1116,29 +1188,31 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/08/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <p="">Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<p></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+          
         
       
     </div>
+
+    
+
     
     
     
-	
-	<div>
-      
-	</div>
-	
-	<div>
-	  
-	</div>
 
     
 
@@ -1174,9 +1248,6 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
           </div>
           
 
-
-          
-
         </div>
         
           
@@ -1201,41 +1272,51 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="/uploads/beaver-head.png"
-                alt="Hexsmith" />
-            
               <p class="site-author-name" itemprop="name">Hexsmith</p>
               <p class="site-description motion-element" itemprop="description">你虽出身平凡，但终将卓尔不凡！</p>
           </div>
 
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
+          
+            <nav class="site-state motion-element">
               
-                <a href="/archives/">
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
               
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
 
-            
-
-            
               
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
 
-          </nav>
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
 
           
             <div class="feed-link motion-element">
@@ -1247,63 +1328,16 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
           
 
           
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/yuzhiping" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:yuzhiping140906@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
 
           
           
 
           
           
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.jianshu.com/u/90ab66c248e6" title="ռС��" target="_blank">ռС��</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://blog.csdn.net/ns_code" title="��ͤ����" target="_blank">��ͤ����</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://tech.meituan.com/" title="���ŵ��������Ŷ�" target="_blank">���ŵ��������Ŷ�</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://ifeve.com/" title="���������" target="_blank">���������</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://lovestblog.cn/" title="��ٱ�" target="_blank">��ٱ�</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://494947.kuaizhan.com/" title="���εĲ���" target="_blank">���εĲ���</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
 
+          
+            
+          
           
 
         </div>
@@ -1324,16 +1358,20 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Hexsmith</span>
 
   
+
+  
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
 
 
 
@@ -1341,7 +1379,7 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.3.0</div>
 
 
 
@@ -1351,21 +1389,20 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
+    <span class="site-uv" title="Total Visitors">
       <i class="fa fa-user"></i>
       <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
     </span>
   
 
   
-    <span class="site-pv">
+    <span class="site-pv" title="Total Views">
       <i class="fa fa-eye"></i>
       <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
     </span>
   
 </div>
+
 
 
 
@@ -1405,10 +1442,12 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
 
 
-  
 
 
-  
+
+
+
+
 
 
 
@@ -1427,16 +1466,6 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
     <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
@@ -1445,50 +1474,29 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
   
 
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
   
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 
   
-
-
-  
-
 
 
 
@@ -1519,326 +1527,7 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
 
 
 
-
-
   
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
 
 
 
@@ -1851,64 +1540,19 @@ Singleton设计模式也用于其他设计模式，如Abstract Factory，Builder
   
 
   
-  
 
   
   
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 
   
 
   
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
-</div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
-})();
-</script>
+
+  
+
+  
 
 </body>
 </html>
