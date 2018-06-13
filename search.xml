@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[在IDE后台打印GC日志]]></title>
+    <url>%2F2018%2F06%2F13%2F%E5%9C%A8IDE%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0GC%E6%97%A5%E5%BF%97%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>idea</tag>
+        <tag>eclipse</tag>
+        <tag>GC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[gradle_local_and_remoting_repositories]]></title>
     <url>%2F2018%2F06%2F12%2Fgradle-local-and-remoting-repositories%2F</url>
     <content type="text"><![CDATA[]]></content>
