@@ -3,10 +3,31 @@
 
 
     
+  <url>
+    <loc>http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories.html</loc>
+    <lastmod>2018-06-16T04:22:40.425Z</lastmod>
+    <data>
+        <display>
+        <title>gradle_local_and_remoting_repositories</title>
+        <pubTime>2018-06-12T15:41:53.000Z</pubTime>
+        
+        <tag>构建工具</tag>
+         
+        <tag>gradle</tag>
+         
+         
+           
+             
+              <breadCrumb title="构建工具" url="http://hexsmith.site/categories/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>http://hexsmith.site/2018/06/13/%E5%9C%A8IDE%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0GC%E6%97%A5%E5%BF%97.html</loc>
-    <lastmod>2018-06-13T15:18:07.714Z</lastmod>
+    <lastmod>2018-06-16T04:22:17.642Z</lastmod>
     <data>
         <display>
         <title>在IDE后台打印GC日志</title>
@@ -20,25 +41,9 @@
          
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories.html</loc>
-    <lastmod>2018-06-12T16:14:09.056Z</lastmod>
-    <data>
-        <display>
-        <title>gradle_local_and_remoting_repositories</title>
-        <pubTime>2018-06-12T15:41:53.000Z</pubTime>
-        
-        <tag>构建工具</tag>
-         
-        <tag>gradle</tag>
-         
-         
-           
+             
+              <breadCrumb title="JVM" url="http://hexsmith.site/categories/JVM/"/>
+          
         </display>
     </data>
     </url>
@@ -46,7 +51,7 @@
     
   <url>
     <loc>http://hexsmith.site/2018/06/03/design-patterns.html</loc>
-    <lastmod>2018-06-03T02:18:04.247Z</lastmod>
+    <lastmod>2018-06-16T04:21:48.626Z</lastmod>
     <data>
         <display>
         <title>design-patterns</title>
@@ -56,6 +61,9 @@
          
          
            
+             
+              <breadCrumb title="设计模式" url="http://hexsmith.site/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
         </display>
     </data>
     </url>
@@ -63,7 +71,7 @@
     
   <url>
     <loc>http://hexsmith.site/2018/06/01/singleton.html</loc>
-    <lastmod>2018-06-02T17:04:35.859Z</lastmod>
+    <lastmod>2018-06-16T04:21:34.249Z</lastmod>
     <data>
         <display>
         <title>design-pattern-singleton</title>
@@ -73,10 +81,14 @@
          
          
            
+             
+              <breadCrumb title="设计模式" url="http://hexsmith.site/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
         </display>
     </data>
     </url>
 
+    
     
     
     

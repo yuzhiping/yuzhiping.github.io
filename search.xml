@@ -4,6 +4,9 @@
     <title><![CDATA[在IDE后台打印GC日志]]></title>
     <url>%2F2018%2F06%2F13%2F%E5%9C%A8IDE%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0GC%E6%97%A5%E5%BF%97.html</url>
     <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
       <tags>
         <tag>idea</tag>
         <tag>eclipse</tag>
@@ -14,6 +17,9 @@
     <title><![CDATA[gradle_local_and_remoting_repositories]]></title>
     <url>%2F2018%2F06%2F12%2Fgradle-local-and-remoting-repositories.html</url>
     <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>构建工具</category>
+      </categories>
       <tags>
         <tag>构建工具</tag>
         <tag>gradle</tag>
@@ -23,6 +29,9 @@
     <title><![CDATA[design-patterns]]></title>
     <url>%2F2018%2F06%2F03%2Fdesign-patterns.html</url>
     <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
       <tags>
         <tag>设计模式</tag>
       </tags>
@@ -31,6 +40,9 @@
     <title><![CDATA[design-pattern-singleton]]></title>
     <url>%2F2018%2F06%2F01%2Fsingleton.html</url>
     <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
       <tags>
         <tag>设计模式</tag>
       </tags>
