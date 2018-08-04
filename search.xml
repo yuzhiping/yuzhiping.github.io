@@ -52,4 +52,16 @@
     <url>%2F2017%2F09%2F08%2Fhello-world.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
+  <entry>
+    <title><![CDATA[一个基础面试题]]></title>
+    <url>%2F2016%2F08%2F04%2F%E4%B8%80%E4%B8%AA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98.html</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>面试题</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面试题</tag>
+      </tags>
+  </entry>
 </search>

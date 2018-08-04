@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://hexsmith.site/2016/08/04/%E4%B8%80%E4%B8%AA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98.html</loc>
+        <lastmod>2018-08-04T03:51:26.607Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://hexsmith.site/2018/06/12/gradle-local-and-remoting-repositories.html</loc>
         <lastmod>2018-06-16T04:22:40.425Z</lastmod>
         <changefreq>weekly</changefreq>
