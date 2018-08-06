@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Java代码模拟高并发操作]]></title>
+    <url>%2F2018%2F08%2F06%2FJava%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%8B%9F%E9%AB%98%E5%B9%B6%E5%8F%91%E6%93%8D%E4%BD%9C.html</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>Java高并发</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[在IDE后台打印GC日志]]></title>
     <url>%2F2018%2F06%2F13%2F%E5%9C%A8IDE%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0GC%E6%97%A5%E5%BF%97.html</url>
     <content type="text"><![CDATA[]]></content>
