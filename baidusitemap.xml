@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://hexsmith.site/2018/08/15/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%88Java%E7%89%88%EF%BC%89.html</loc>
+    <lastmod>2018-08-15T15:22:12.741Z</lastmod>
+    <data>
+        <display>
+        <title>Redis分布式锁的正确实现方式（Java版）</title>
+        <pubTime>2018-08-15T14:43:48.000Z</pubTime>
+        
+        <tag>分布式锁</tag>
+         
+        <tag>redis</tag>
+         
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://hexsmith.site/categories/Java/"/>
+          
+             
+              <breadCrumb title="分布式" url="http://hexsmith.site/categories/Java/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://hexsmith.site/2018/08/14/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream%E6%B5%81%E5%9F%BA%E7%A1%80%E4%BD%93%E9%AA%8C.html</loc>
     <lastmod>2018-08-14T15:17:09.945Z</lastmod>
     <data>
