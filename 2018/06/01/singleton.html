@@ -95,12 +95,11 @@
 <meta name="keywords" content="设计模式,单例模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="design-pattern-singleton">
-<meta property="og:url" content="http://hexsmith.site/2018/06/01/singleton.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;hexsmith.site&#x2F;2018&#x2F;06&#x2F;01&#x2F;singleton.html">
 <meta property="og:site_name" content="Hexsmith&#39;s blog">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-16T04:21:34.249Z">
+<meta property="og:updated_time" content="2018-06-16T04:21:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="design-pattern-singleton">
 
 
 
@@ -177,7 +176,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	
-	<a href="https://github.com/yuzhiping"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+	<a href="https://github.com/yuzhiping" target="_blank" rel="noopener"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -213,7 +212,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -223,7 +222,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -233,7 +232,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -243,7 +242,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -253,7 +252,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -265,7 +264,7 @@
       
         <li class="menu-item menu-item-search">
           
-            <a href="javascript:;" class="popup-trigger">
+            <a href="javascript:;" target="_blank" rel="noopener" class="popup-trigger">
           
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
@@ -373,7 +372,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-16T12:21:34+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-16T12:21:36+08:00">
                 2018-06-16
               </time>
             
@@ -392,7 +391,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
                     <span itemprop="name">设计模式</span>
                   </a>
                 </span>
@@ -476,7 +475,7 @@
       
 
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <h3="" id="1-单例模式"><a href="#1-单例模式" class="headerlink" title="1.单例模式"></a>1.单例模式<ul>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css" /><div class=".article-gallery"<h3 id="1-单例模式"><a href="#1-单例模式" class="headerlink" title="1.单例模式"></a>1.单例模式</h3><ul>
 <li>单例模式限制了一个类的实例化，并确保java虚拟机中只存在一个类的实例。</li>
 <li>单例类必须提供一个全局访问点来获取类的实例。</li>
 <li>单例模式用于日志记录，驱动程序对象，缓存和线程池。</li>
@@ -491,8 +490,7 @@
 <h3 id="4-懒汉式单例"><a href="#4-懒汉式单例" class="headerlink" title="4.懒汉式单例"></a>4.懒汉式单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:懒汉式单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:47:10 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInitializedSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> LazyInitializedSingleton instance;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">LazyInitializedSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyInitializedSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			instance = <span class="keyword">new</span> LazyInitializedSingleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre><p>上面的实现对单线程环境工作良好，但是当涉及到多线程系统时，如果多个线程同时处于if循环内部，则会导致问题。它会破坏单例模式，两个线程都会得到单例类的不同实例。</p>
 <h3 id="5-静态代码块实现单例"><a href="#5-静态代码块实现单例" class="headerlink" title="5.静态代码块实现单例"></a>5.静态代码块实现单例</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:使用static代码块实现单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:41:15 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticBlockSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> StaticBlockSingleton instance;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">StaticBlockSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			instance = <span class="keyword">new</span> StaticBlockSingleton();</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Exception occured in creating singleton instance"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StaticBlockSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre><h3 id="6-静态内部类实现单例"><a href="#6-静态内部类实现单例" class="headerlink" title="6.静态内部类实现单例"></a>6.静态内部类实现单例</h3><p>在Java 5之前，Java内存模型存在很多问题，以上方法在某些情况下失败，因为太多的线程试图同时获得Singleton类的实例。所以Bill Pugh提出了一种使用内部静态帮助类来创建Singleton类的另一种方法。Bill Pugh Singleton的实现是这样的<br>    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 静态内部类实现单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午3:44:11</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BillPughSingleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">BillPughSingleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">singletonHelper</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BillPughSingleton instance = <span class="keyword">new</span> BillPughSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BillPughSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singletonHelper.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意包含单例类的实例的私有内部静态类。加载单例类时，SingletonHelper类不会加载到内存中，只有当有人调用getInstance方法时，才会加载此类，并创建Singleton类实例。这是Singleton类最广泛使用的方法，因为它不需要同步。</p>
+</code></pre><h3 id="6-静态内部类实现单例"><a href="#6-静态内部类实现单例" class="headerlink" title="6.静态内部类实现单例"></a>6.静态内部类实现单例</h3><p>在Java 5之前，Java内存模型存在很多问题，以上方法在某些情况下失败，因为太多的线程试图同时获得Singleton类的实例。所以Bill Pugh提出了一种使用内部静态帮助类来创建Singleton类的另一种方法。Bill Pugh Singleton的实现是这样的<br>    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 静态内部类实现单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午3:44:11</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BillPughSingleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">BillPughSingleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">singletonHelper</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BillPughSingleton instance = <span class="keyword">new</span> BillPughSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BillPughSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singletonHelper.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>注意包含单例类的实例的私有内部静态类。加载单例类时，SingletonHelper类不会加载到内存中，只有当有人调用getInstance方法时，才会加载此类，并创建Singleton类实例。这是Singleton类最广泛使用的方法，因为它不需要同步。</p>
 <h3 id="7-线程安全的单例模式"><a href="#7-线程安全的单例模式" class="headerlink" title="7.线程安全的单例模式"></a>7.线程安全的单例模式</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:线程安全的单例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017年11月6日 下午6:50:00</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadSafeSingleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ThreadSafeSingleton instance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">ThreadSafeSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> ThreadSafeSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			instance = <span class="keyword">new</span> ThreadSafeSingleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadSafeSingleton <span class="title">getInstanceUsingDoubleLocking</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (ThreadSafeSingleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">					instance = <span class="keyword">new</span> ThreadSafeSingleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre><p>这种方式实现了线程安全的单例模式，但是在高并发场合使用时性能很糟糕。所以不推荐在高并发环境中使用</p>
 <h3 id="8-单例模式序列化"><a href="#8-单例模式序列化" class="headerlink" title="8.单例模式序列化"></a>8.单例模式序列化</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hexsmith.design.pattern.creational.singleton;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 单例模式序列化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018年5月9日 下午4:16:19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializedSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 序列号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">7308821136820448697L</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SerializedSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHelper</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SerializedSingleton instance = <span class="keyword">new</span> SerializedSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">readResolve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializedSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHelper.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -595,7 +593,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
+            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
           
         </div>
       
@@ -742,9 +740,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -755,7 +753,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -766,7 +764,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -842,7 +840,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
