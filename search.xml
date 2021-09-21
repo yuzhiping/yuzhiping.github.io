@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java代码模拟高并发操作</title>
+    <url>/posts/2a28db14/</url>
+    <content><![CDATA[<blockquote>
+<p>Java通过代码模拟高并发可以以最快的方式发现我们系统中潜在的线程安全性问题，此处使用<code>Semaphore</code>（信号量）和 <code>CountDownLatch</code>（闭锁）搭配<code>ExecutorService</code>（线程池）来进行模拟</p>
+</blockquote>
+<span id="more"></span>
+
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><p>JDK 1.5之后会提供这个类，Semaphore是一种基于计数的信号量。它可以设定一个阈值，基于此，多个线程竞争获取许可信号，做完自己的申请后归还，超过阈值后，线程申请许可信号将会被阻塞。Semaphore可以用来构建一些对象池，资源池之类的，比如数据库连接池，我们也可以创建计数为1的Semaphore，将其作为一种类似互斥锁的机制，这也叫二元信号量，表示两种互斥状态。其原理图如下：<br><img src="/uploads/img/semaphore.png" alt="Semaphore原理图"></p>
+<h4 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h4><p>JDK 1.5之后会提供这个类，CountDownLatch这个类能够使一个线程等待其他线程完成各自的工作后再执行。例如，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。CountDownLatch是通过一个计数器来实现的，计数器的初始值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就会减1。当计数器值到达0时，它表示所有的线程已经完成了任务，然后在闭锁上等待的线程就可以恢复执行任务。<br>其原理图如下：<br><img src="/uploads/img/CountDownLatch.jpg" alt="CountDownLatch原理图"></p>
+<p>以上两个类可以搭配使用，达到模拟高并发的效果，以下使用代码的形式进行举例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用&#123;<span class="doctag">@link</span> Semaphore&#125;和&#123;<span class="doctag">@link</span> CountDownLatch&#125;模拟并发请求</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Semaphore</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> CountDownLatch</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ExecutorService</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018/8/6 22:44</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentCountExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求总数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CLIENT_TOTAL = <span class="number">5000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 同时并发执行的线程数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREAD_TOTAL = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 由于是多线程并行操作count，因此要使用原子操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger count = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="comment">// 信号量，用户控制并发线程数</span></span><br><span class="line">        <span class="keyword">final</span> Semaphore semaphore = <span class="keyword">new</span> Semaphore(THREAD_TOTAL);</span><br><span class="line">        <span class="comment">// 闭锁，实现计数器递减</span></span><br><span class="line">        <span class="keyword">final</span> CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(CLIENT_TOTAL);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;CLIENT_TOTAL;i++)&#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 获取执行许可，当许可不超过200时，允许通过，否则线程阻塞等待，直到获取许可</span></span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    add();</span><br><span class="line">                    <span class="comment">// 释放许可</span></span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 闭锁减一</span></span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// main线程阻塞等待，知道闭锁值为0才继续向下执行</span></span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">        System.out.println(<span class="string">&quot;count = &quot;</span> + count);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计数统计</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>&#123;</span><br><span class="line">        count.incrementAndGet();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java高并发</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 8 新特性之 Stream 流基础体验</title>
     <url>/posts/bf1cd5c4/</url>
     <content><![CDATA[<p><img src="/uploads/img/stream-api.png" alt="stream-api"></p>
@@ -34,23 +54,128 @@
       </tags>
   </entry>
   <entry>
-    <title>Java代码模拟高并发操作</title>
-    <url>/posts/2a28db14/</url>
+    <title>design-patterns</title>
+    <url>/posts/14da54c5/</url>
+    <content><![CDATA[<h1 id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介</h1><p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理的运用设计模式可以完美的解决很多问题，每种模式在现在中都有相应的原理来与之对应，每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是它能被广泛应用的原因。本章我们会以理论与实践相结合的方式来进行本章的学习，希望广大程序爱好者，学好设计模式，做一个优秀的软件工程师！</p>
+<span id="more"></span>
+
+<h2 id="一、设计模式的分类"><a href="#一、设计模式的分类" class="headerlink" title="一、设计模式的分类"></a>一、设计模式的分类</h2><p>总体来说设计模式分为三大类：</p>
+<p>　　创建型模式，共五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。</p>
+<p>　　结构型模式，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。</p>
+<p>　　行为型模式，共十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</p>
+<p>其实还有两类：并发型模式和线程池模式。用一个图片来整体描述一下：<br><img src="/uploads/img/design-patterns.jpg" alt="设计模式之间的关系"></p>
+<h2 id="二、设计模式的六大原则"><a href="#二、设计模式的六大原则" class="headerlink" title="二、设计模式的六大原则"></a>二、设计模式的六大原则</h2><ul>
+<li>开闭原则（Open Close Principle）</li>
+</ul>
+<p>　　开闭原则就是说对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。所以一句话概括就是：为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p>
+<ul>
+<li>里氏代换原则（Liskov Substitution Principle）</li>
+</ul>
+<p>　　里氏代换原则(Liskov Substitution Principle LSP)面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。 LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。—— From Baidu 百科</p>
+<ul>
+<li>依赖倒转原则（Dependence Inversion Principle）</li>
+</ul>
+<p>　　这个是开闭原则的基础，具体内容：真对接口编程，依赖于抽象而不依赖于具体。</p>
+<ul>
+<li>接口隔离原则（Interface Segregation Principle）</li>
+</ul>
+<p>　　这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。还是一个降低类之间的耦合度的意思，从这儿我们看出，其实设计模式就是一个软件的设计思想，从大型软件架构出发，为了升级和维护方便。所以上文中多次出现：降低依赖，降低耦合。</p>
+<ul>
+<li>迪米特法则（最少知道原则）（Demeter Principle）</li>
+</ul>
+<p>　　为什么叫最少知道原则，就是说：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。</p>
+<ul>
+<li>合成复用原则（Composite Reuse Principle）</li>
+</ul>
+<p>　　原则是尽量使用合成/聚合的方式，而不是使用继承。</p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis分布式锁的正确实现方式（Java版）</title>
+    <url>/posts/705011ee/</url>
     <content><![CDATA[<blockquote>
-<p>Java通过代码模拟高并发可以以最快的方式发现我们系统中潜在的线程安全性问题，此处使用<code>Semaphore</code>（信号量）和 <code>CountDownLatch</code>（闭锁）搭配<code>ExecutorService</code>（线程池）来进行模拟</p>
+<p>本博客使用第三方开源组件Jedis实现Redis客户端，且只考虑Redis服务端单机部署的场景。</p>
+</blockquote>
+<blockquote>
+<p><strong>原文出处</strong> ：<a href="https://wudashan.cn/2017/10/23/Redis-Distributed-Lock-Implement">Redis分布式锁的正确实现方式（Java版）</a> </p>
 </blockquote>
 <span id="more"></span>
 
-<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><p>JDK 1.5之后会提供这个类，Semaphore是一种基于计数的信号量。它可以设定一个阈值，基于此，多个线程竞争获取许可信号，做完自己的申请后归还，超过阈值后，线程申请许可信号将会被阻塞。Semaphore可以用来构建一些对象池，资源池之类的，比如数据库连接池，我们也可以创建计数为1的Semaphore，将其作为一种类似互斥锁的机制，这也叫二元信号量，表示两种互斥状态。其原理图如下：<br><img src="/uploads/img/semaphore.png" alt="Semaphore原理图"></p>
-<h4 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h4><p>JDK 1.5之后会提供这个类，CountDownLatch这个类能够使一个线程等待其他线程完成各自的工作后再执行。例如，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。CountDownLatch是通过一个计数器来实现的，计数器的初始值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就会减1。当计数器值到达0时，它表示所有的线程已经完成了任务，然后在闭锁上等待的线程就可以恢复执行任务。<br>其原理图如下：<br><img src="/uploads/img/CountDownLatch.jpg" alt="CountDownLatch原理图"></p>
-<p>以上两个类可以搭配使用，达到模拟高并发的效果，以下使用代码的形式进行举例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用&#123;<span class="doctag">@link</span> Semaphore&#125;和&#123;<span class="doctag">@link</span> CountDownLatch&#125;模拟并发请求</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hexsmith</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Semaphore</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> CountDownLatch</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ExecutorService</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018/8/6 22:44</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentCountExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求总数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CLIENT_TOTAL = <span class="number">5000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 同时并发执行的线程数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREAD_TOTAL = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 由于是多线程并行操作count，因此要使用原子操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger count = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="comment">// 信号量，用户控制并发线程数</span></span><br><span class="line">        <span class="keyword">final</span> Semaphore semaphore = <span class="keyword">new</span> Semaphore(THREAD_TOTAL);</span><br><span class="line">        <span class="comment">// 闭锁，实现计数器递减</span></span><br><span class="line">        <span class="keyword">final</span> CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(CLIENT_TOTAL);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;CLIENT_TOTAL;i++)&#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 获取执行许可，当许可不超过200时，允许通过，否则线程阻塞等待，直到获取许可</span></span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    add();</span><br><span class="line">                    <span class="comment">// 释放许可</span></span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 闭锁减一</span></span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// main线程阻塞等待，知道闭锁值为0才继续向下执行</span></span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">        System.out.println(<span class="string">&quot;count = &quot;</span> + count);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计数统计</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>&#123;</span><br><span class="line">        count.incrementAndGet();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>分布式锁一般有三种实现方式：</p>
+<ol>
+<li> 数据库乐观锁；</li>
+<li> 基于Redis的分布式锁；</li>
+<li> 基于ZooKeeper的分布式锁。</li>
+</ol>
+<p>本篇博客将介绍第二种方式，基于Redis实现分布式锁。虽然网上已经有各种介绍Redis分布式锁实现的博客，然而他们的实现却有着各种各样的问题，为了避免误人子弟，本篇博客将详细介绍如何正确地实现Redis分布式锁。</p>
+<hr>
+<h4 id="二、可靠性"><a href="#二、可靠性" class="headerlink" title="二、可靠性"></a>二、可靠性</h4><p>首先，为了确保分布式锁可用，我们至少要确保锁的实现同时满足以下四个条件：</p>
+<ol>
+<li>互斥性。在任意时刻，只有一个客户端能持有锁。</li>
+<li>不会发生死锁。即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。</li>
+<li>具有容错性。只要大部分的Redis节点正常运行，客户端就可以加锁和解锁。</li>
+<li>解铃还须系铃人。加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。</li>
+</ol>
+<h4 id="三、代码实现"><a href="#三、代码实现" class="headerlink" title="三、代码实现"></a>三、代码实现</h4><h5 id="（一）组件依赖"><a href="#（一）组件依赖" class="headerlink" title="（一）组件依赖"></a>（一）组件依赖</h5><p>首先我们要通过Maven引入<code>Jedis</code>开源组件，在<code>pom.xml</code>文件加入下面的代码：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="（二）加锁代码"><a href="#（二）加锁代码" class="headerlink" title="（二）加锁代码"></a>（二）加锁代码</h5><h6 id="1、正确姿势"><a href="#1、正确姿势" class="headerlink" title="1、正确姿势"></a>1、正确姿势</h6><p>Talk is cheap, show me the code。先展示代码，再带大家慢慢解释为什么这样实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisTool</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LOCK_SUCCESS = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SET_IF_NOT_EXIST = <span class="string">&quot;NX&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SET_WITH_EXPIRE_TIME = <span class="string">&quot;PX&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 尝试获取分布式锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jedis Redis客户端</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey 锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> requestId 请求标识</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expireTime 超期时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否获取成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">tryGetDistributedLock</span><span class="params">(Jedis jedis, String lockKey, String requestId, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (LOCK_SUCCESS.equals(result)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们加锁就一行代码：<code>jedis.set(String key, String value, String nxxx, String expx, int time)</code>，这个set()方法一共有五个形参：</p>
+<ul>
+<li><p>第一个为key，我们使用key来当锁，因为key是唯一的。</p>
+</li>
+<li><p>第二个为value，我们传的是requestId，很多童鞋可能不明白，有key作为锁不就够了吗，为什么还要用到value？原因就是我们在上面讲到可靠性时，分布式锁要满足第四个条件解铃还须系铃人，通过给value赋值为requestId，我们就知道这把锁是哪个请求加的了，在解锁的时候就可以有依据。requestId可以使用UUID.randomUUID().toString()方法生成。</p>
+</li>
+<li><p>第三个为nxxx，这个参数我们填的是NX，意思是SET IF NOT EXIST，即当key不存在时，我们进行set操作；若key已经存在，则不做任何操作；</p>
+</li>
+<li><p>第四个为expx，这个参数我们传的是PX，意思是我们要给这个key加一个过期的设置，具体时间由第五个参数决定。</p>
+</li>
+<li><p>第五个为time，与第四个参数相呼应，代表key的过期时间。</p>
+</li>
+</ul>
+<p>总的来说，执行上面的set()方法就只会导致两种结果：1. 当前没有锁（key不存在），那么就进行加锁操作，并对锁设置个有效期，同时value表示加锁的客户端。2. 已有锁存在，不做任何操作。</p>
+<p>心细的童鞋就会发现了，我们的加锁代码满足我们可靠性里描述的三个条件。首先，set()加入了NX参数，可以保证如果已有key存在，则函数不会调用成功，也就是只有一个客户端能持有锁，满足互斥性。其次，由于我们对锁设置了过期时间，即使锁的持有者后续发生崩溃而没有解锁，锁也会因为到了过期时间而自动解锁（即key被删除），不会发生死锁。最后，因为我们将value赋值为requestId，代表加锁的客户端请求标识，那么在客户端在解锁的时候就可以进行校验是否是同一个客户端。由于我们只考虑Redis单机部署的场景，所以容错性我们暂不考虑。</p>
+<h6 id="2、错误示例1"><a href="#2、错误示例1" class="headerlink" title="2、错误示例1"></a>2、错误示例1</h6><p>比较常见的错误示例就是使用<code>jedis.setnx()</code>和<code>jedis.expire()</code>组合实现加锁，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongGetLock1</span><span class="params">(Jedis jedis, String lockKey, String requestId, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Long result = jedis.setnx(lockKey, requestId);</span><br><span class="line">    <span class="keyword">if</span> (result == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 若在这里程序突然崩溃，则无法设置过期时间，将发生死锁</span></span><br><span class="line">        jedis.expire(lockKey, expireTime);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>setnx()方法作用就是SET IF NOT EXIST，expire()方法就是给锁加一个过期时间。乍一看好像和前面的set()方法结果一样，然而由于这是两条Redis命令，不具有原子性，如果程序在执行完setnx()之后突然崩溃，导致锁没有设置过期时间。那么将会发生死锁。网上之所以有人这样实现，是因为低版本的jedis并不支持多参数的set()方法。</p>
+<h6 id="3、错误示例2"><a href="#3、错误示例2" class="headerlink" title="3、错误示例2"></a>3、错误示例2</h6><p>这一种错误示例就比较难以发现问题，而且实现也比较复杂。实现思路：使用jedis.setnx()命令实现加锁，其中key是锁，value是锁的过期时间。执行过程：1. 通过setnx()方法尝试加锁，如果当前锁不存在，返回加锁成功。2. 如果锁已经存在则获取锁的过期时间，和当前时间比较，如果锁已经过期，则设置新的过期时间，返回加锁成功。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">wrongGetLock2</span><span class="params">(Jedis jedis, String lockKey, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> expires = System.currentTimeMillis() + expireTime;</span><br><span class="line">    String expiresStr = String.valueOf(expires);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果当前锁不存在，返回加锁成功</span></span><br><span class="line">    <span class="keyword">if</span> (jedis.setnx(lockKey, expiresStr) == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果锁存在，获取锁的过期时间</span></span><br><span class="line">    String currentValueStr = jedis.get(lockKey);</span><br><span class="line">    <span class="keyword">if</span> (currentValueStr != <span class="keyword">null</span> &amp;&amp; Long.parseLong(currentValueStr) &lt; System.currentTimeMillis()) &#123;</span><br><span class="line">        <span class="comment">// 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间</span></span><br><span class="line">        String oldValueStr = jedis.getSet(lockKey, expiresStr);</span><br><span class="line">        <span class="keyword">if</span> (oldValueStr != <span class="keyword">null</span> &amp;&amp; oldValueStr.equals(currentValueStr)) &#123;</span><br><span class="line">            <span class="comment">// 考虑多线程并发的情况，只有一个线程的设置值和当前值相同，它才有权利加锁</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 其他情况，一律返回加锁失败</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>那么这段代码问题在哪里？1. 由于是客户端自己生成过期时间，所以需要强制要求分布式下每个客户端的时间必须同步。 2. 当锁过期的时候，如果多个客户端同时执行jedis.getSet()方法，那么虽然最终只有一个客户端可以加锁，但是这个客户端的锁的过期时间可能被其他客户端覆盖。3. 锁不具备拥有者标识，即任何客户端都可以解锁。</p>
+<h5 id="（三）解锁代码"><a href="#（三）解锁代码" class="headerlink" title="（三）解锁代码"></a>（三）解锁代码</h5><h6 id="1、正确姿势-1"><a href="#1、正确姿势-1" class="headerlink" title="1、正确姿势"></a>1、正确姿势</h6><p>还是先展示代码，再带大家慢慢解释为什么这样实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisTool</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Long RELEASE_SUCCESS = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 释放分布式锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jedis Redis客户端</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey 锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> requestId 请求标识</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否释放成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">releaseDistributedLock</span><span class="params">(Jedis jedis, String lockKey, String requestId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String script = <span class="string">&quot;if redis.call(&#x27;get&#x27;, KEYS[1]) == ARGV[1] then return redis.call(&#x27;del&#x27;, KEYS[1]) else return 0 end&quot;</span>;</span><br><span class="line">        Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (RELEASE_SUCCESS.equals(result)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们解锁只需要两行代码就搞定了！第一行代码，我们写了一个简单的Lua脚本代码，上一次见到这个编程语言还是在《黑客与画家》里，没想到这次居然用上了。第二行代码，我们将Lua代码传到jedis.eval()方法里，并使参数KEYS[1]赋值为lockKey，ARGV[1]赋值为requestId。eval()方法是将Lua代码交给Redis服务端执行。</p>
+<p>那么这段Lua代码的功能是什么呢？其实很简单，首先获取锁对应的value值，检查是否与requestId相等，如果相等则删除锁（解锁）。那么为什么要使用Lua语言来实现呢？因为要确保上述操作是原子性的。关于非原子性会带来什么问题，可以阅读【解锁代码-错误示例2】 。那么为什么执行eval()方法可以确保原子性，源于Redis的特性，下面是官网对eval命令的部分解释：<br><img src="/uploads/img/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F_01.png" alt="Redis分布式锁的正确实现方式"></p>
+<p>简单来说，就是在eval命令执行Lua代码的时候，Lua代码将被当成一个命令去执行，并且直到eval命令执行完成，Redis才会执行其他命令。</p>
+<h6 id="2、错误示例1-1"><a href="#2、错误示例1-1" class="headerlink" title="2、错误示例1"></a>2、错误示例1</h6><p>最常见的解锁代码就是直接使用jedis.del()方法删除锁，这种不先判断锁的拥有者而直接解锁的方式，会导致任何客户端都可以随时进行解锁，即使这把锁不是它的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongReleaseLock1</span><span class="params">(Jedis jedis, String lockKey)</span> </span>&#123;</span><br><span class="line">    jedis.del(lockKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3、错误示例2-1"><a href="#3、错误示例2-1" class="headerlink" title="3、错误示例2"></a>3、错误示例2</h6><p>这种解锁代码乍一看也是没问题，甚至我之前也差点这样实现，与正确姿势差不多，唯一区别的是分成两条命令去执行，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongReleaseLock2</span><span class="params">(Jedis jedis, String lockKey, String requestId)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 判断加锁与解锁是不是同一个客户端</span></span><br><span class="line">    <span class="keyword">if</span> (requestId.equals(jedis.get(lockKey))) &#123;</span><br><span class="line">        <span class="comment">// 若在此时，这把锁突然不是这个客户端的，则会误解锁</span></span><br><span class="line">        jedis.del(lockKey);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如代码注释，问题在于如果调用jedis.del()方法的时候，这把锁已经不属于当前客户端的时候会解除他人加的锁。那么是否真的有这种场景？答案是肯定的，比如客户端A加锁，一段时间之后客户端A解锁，在执行jedis.del()之前，锁突然过期了，此时客户端B尝试加锁成功，然后客户端A再执行del()方法，则将客户端B的锁给解除了。</p>
+<hr>
+<h4 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h4><p>本文主要介绍了如何使用Java代码正确实现Redis分布式锁，对于加锁和解锁也分别给出了两个比较经典的错误示例。其实想要通过Redis实现分布式锁并不难，只要保证能满足可靠性里的四个条件。互联网虽然给我们带来了方便，只要有问题就可以google，然而网上的答案一定是对的吗？其实不然，所以我们更应该时刻保持着质疑精神，多想多验证。</p>
+<p>如果你的项目中Redis是多机部署的，那么可以尝试使用Redisson实现分布式锁，这是Redis官方提供的Java组件，链接在参考阅读章节已经给出。</p>
+<h4 id="五、参考阅读"><a href="#五、参考阅读" class="headerlink" title="五、参考阅读"></a>五、参考阅读</h4><ul>
+<li><a href="https://redis.io/topics/distlock">Distributed locks with Redis</a></li>
+<li><a href="https://redis.io/commands/eval">EVAL command</a></li>
+<li><a href="https://github.com/redisson/redisson">Redisson</a></li>
+</ul>
+]]></content>
       <categories>
-        <category>Java高并发</category>
+        <category>Java</category>
+        <category>分布式</category>
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>并发</tag>
+        <tag>分布式锁</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -262,88 +387,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis分布式锁的正确实现方式（Java版）</title>
-    <url>/posts/705011ee/</url>
-    <content><![CDATA[<blockquote>
-<p>本博客使用第三方开源组件Jedis实现Redis客户端，且只考虑Redis服务端单机部署的场景。</p>
-</blockquote>
-<blockquote>
-<p><strong>原文出处</strong> ：<a href="https://wudashan.cn/2017/10/23/Redis-Distributed-Lock-Implement">Redis分布式锁的正确实现方式（Java版）</a> </p>
-</blockquote>
-<span id="more"></span>
-
-<h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>分布式锁一般有三种实现方式：</p>
-<ol>
-<li> 数据库乐观锁；</li>
-<li> 基于Redis的分布式锁；</li>
-<li> 基于ZooKeeper的分布式锁。</li>
-</ol>
-<p>本篇博客将介绍第二种方式，基于Redis实现分布式锁。虽然网上已经有各种介绍Redis分布式锁实现的博客，然而他们的实现却有着各种各样的问题，为了避免误人子弟，本篇博客将详细介绍如何正确地实现Redis分布式锁。</p>
-<hr>
-<h4 id="二、可靠性"><a href="#二、可靠性" class="headerlink" title="二、可靠性"></a>二、可靠性</h4><p>首先，为了确保分布式锁可用，我们至少要确保锁的实现同时满足以下四个条件：</p>
-<ol>
-<li>互斥性。在任意时刻，只有一个客户端能持有锁。</li>
-<li>不会发生死锁。即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。</li>
-<li>具有容错性。只要大部分的Redis节点正常运行，客户端就可以加锁和解锁。</li>
-<li>解铃还须系铃人。加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。</li>
-</ol>
-<h4 id="三、代码实现"><a href="#三、代码实现" class="headerlink" title="三、代码实现"></a>三、代码实现</h4><h5 id="（一）组件依赖"><a href="#（一）组件依赖" class="headerlink" title="（一）组件依赖"></a>（一）组件依赖</h5><p>首先我们要通过Maven引入<code>Jedis</code>开源组件，在<code>pom.xml</code>文件加入下面的代码：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="（二）加锁代码"><a href="#（二）加锁代码" class="headerlink" title="（二）加锁代码"></a>（二）加锁代码</h5><h6 id="1、正确姿势"><a href="#1、正确姿势" class="headerlink" title="1、正确姿势"></a>1、正确姿势</h6><p>Talk is cheap, show me the code。先展示代码，再带大家慢慢解释为什么这样实现：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisTool</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LOCK_SUCCESS = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SET_IF_NOT_EXIST = <span class="string">&quot;NX&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SET_WITH_EXPIRE_TIME = <span class="string">&quot;PX&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 尝试获取分布式锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jedis Redis客户端</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey 锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> requestId 请求标识</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expireTime 超期时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否获取成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">tryGetDistributedLock</span><span class="params">(Jedis jedis, String lockKey, String requestId, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (LOCK_SUCCESS.equals(result)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，我们加锁就一行代码：<code>jedis.set(String key, String value, String nxxx, String expx, int time)</code>，这个set()方法一共有五个形参：</p>
-<ul>
-<li><p>第一个为key，我们使用key来当锁，因为key是唯一的。</p>
-</li>
-<li><p>第二个为value，我们传的是requestId，很多童鞋可能不明白，有key作为锁不就够了吗，为什么还要用到value？原因就是我们在上面讲到可靠性时，分布式锁要满足第四个条件解铃还须系铃人，通过给value赋值为requestId，我们就知道这把锁是哪个请求加的了，在解锁的时候就可以有依据。requestId可以使用UUID.randomUUID().toString()方法生成。</p>
-</li>
-<li><p>第三个为nxxx，这个参数我们填的是NX，意思是SET IF NOT EXIST，即当key不存在时，我们进行set操作；若key已经存在，则不做任何操作；</p>
-</li>
-<li><p>第四个为expx，这个参数我们传的是PX，意思是我们要给这个key加一个过期的设置，具体时间由第五个参数决定。</p>
-</li>
-<li><p>第五个为time，与第四个参数相呼应，代表key的过期时间。</p>
-</li>
-</ul>
-<p>总的来说，执行上面的set()方法就只会导致两种结果：1. 当前没有锁（key不存在），那么就进行加锁操作，并对锁设置个有效期，同时value表示加锁的客户端。2. 已有锁存在，不做任何操作。</p>
-<p>心细的童鞋就会发现了，我们的加锁代码满足我们可靠性里描述的三个条件。首先，set()加入了NX参数，可以保证如果已有key存在，则函数不会调用成功，也就是只有一个客户端能持有锁，满足互斥性。其次，由于我们对锁设置了过期时间，即使锁的持有者后续发生崩溃而没有解锁，锁也会因为到了过期时间而自动解锁（即key被删除），不会发生死锁。最后，因为我们将value赋值为requestId，代表加锁的客户端请求标识，那么在客户端在解锁的时候就可以进行校验是否是同一个客户端。由于我们只考虑Redis单机部署的场景，所以容错性我们暂不考虑。</p>
-<h6 id="2、错误示例1"><a href="#2、错误示例1" class="headerlink" title="2、错误示例1"></a>2、错误示例1</h6><p>比较常见的错误示例就是使用<code>jedis.setnx()</code>和<code>jedis.expire()</code>组合实现加锁，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongGetLock1</span><span class="params">(Jedis jedis, String lockKey, String requestId, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Long result = jedis.setnx(lockKey, requestId);</span><br><span class="line">    <span class="keyword">if</span> (result == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 若在这里程序突然崩溃，则无法设置过期时间，将发生死锁</span></span><br><span class="line">        jedis.expire(lockKey, expireTime);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>setnx()方法作用就是SET IF NOT EXIST，expire()方法就是给锁加一个过期时间。乍一看好像和前面的set()方法结果一样，然而由于这是两条Redis命令，不具有原子性，如果程序在执行完setnx()之后突然崩溃，导致锁没有设置过期时间。那么将会发生死锁。网上之所以有人这样实现，是因为低版本的jedis并不支持多参数的set()方法。</p>
-<h6 id="3、错误示例2"><a href="#3、错误示例2" class="headerlink" title="3、错误示例2"></a>3、错误示例2</h6><p>这一种错误示例就比较难以发现问题，而且实现也比较复杂。实现思路：使用jedis.setnx()命令实现加锁，其中key是锁，value是锁的过期时间。执行过程：1. 通过setnx()方法尝试加锁，如果当前锁不存在，返回加锁成功。2. 如果锁已经存在则获取锁的过期时间，和当前时间比较，如果锁已经过期，则设置新的过期时间，返回加锁成功。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">wrongGetLock2</span><span class="params">(Jedis jedis, String lockKey, <span class="keyword">int</span> expireTime)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> expires = System.currentTimeMillis() + expireTime;</span><br><span class="line">    String expiresStr = String.valueOf(expires);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果当前锁不存在，返回加锁成功</span></span><br><span class="line">    <span class="keyword">if</span> (jedis.setnx(lockKey, expiresStr) == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果锁存在，获取锁的过期时间</span></span><br><span class="line">    String currentValueStr = jedis.get(lockKey);</span><br><span class="line">    <span class="keyword">if</span> (currentValueStr != <span class="keyword">null</span> &amp;&amp; Long.parseLong(currentValueStr) &lt; System.currentTimeMillis()) &#123;</span><br><span class="line">        <span class="comment">// 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间</span></span><br><span class="line">        String oldValueStr = jedis.getSet(lockKey, expiresStr);</span><br><span class="line">        <span class="keyword">if</span> (oldValueStr != <span class="keyword">null</span> &amp;&amp; oldValueStr.equals(currentValueStr)) &#123;</span><br><span class="line">            <span class="comment">// 考虑多线程并发的情况，只有一个线程的设置值和当前值相同，它才有权利加锁</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 其他情况，一律返回加锁失败</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>那么这段代码问题在哪里？1. 由于是客户端自己生成过期时间，所以需要强制要求分布式下每个客户端的时间必须同步。 2. 当锁过期的时候，如果多个客户端同时执行jedis.getSet()方法，那么虽然最终只有一个客户端可以加锁，但是这个客户端的锁的过期时间可能被其他客户端覆盖。3. 锁不具备拥有者标识，即任何客户端都可以解锁。</p>
-<h5 id="（三）解锁代码"><a href="#（三）解锁代码" class="headerlink" title="（三）解锁代码"></a>（三）解锁代码</h5><h6 id="1、正确姿势-1"><a href="#1、正确姿势-1" class="headerlink" title="1、正确姿势"></a>1、正确姿势</h6><p>还是先展示代码，再带大家慢慢解释为什么这样实现：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisTool</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Long RELEASE_SUCCESS = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 释放分布式锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jedis Redis客户端</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey 锁</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> requestId 请求标识</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否释放成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">releaseDistributedLock</span><span class="params">(Jedis jedis, String lockKey, String requestId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String script = <span class="string">&quot;if redis.call(&#x27;get&#x27;, KEYS[1]) == ARGV[1] then return redis.call(&#x27;del&#x27;, KEYS[1]) else return 0 end&quot;</span>;</span><br><span class="line">        Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (RELEASE_SUCCESS.equals(result)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，我们解锁只需要两行代码就搞定了！第一行代码，我们写了一个简单的Lua脚本代码，上一次见到这个编程语言还是在《黑客与画家》里，没想到这次居然用上了。第二行代码，我们将Lua代码传到jedis.eval()方法里，并使参数KEYS[1]赋值为lockKey，ARGV[1]赋值为requestId。eval()方法是将Lua代码交给Redis服务端执行。</p>
-<p>那么这段Lua代码的功能是什么呢？其实很简单，首先获取锁对应的value值，检查是否与requestId相等，如果相等则删除锁（解锁）。那么为什么要使用Lua语言来实现呢？因为要确保上述操作是原子性的。关于非原子性会带来什么问题，可以阅读【解锁代码-错误示例2】 。那么为什么执行eval()方法可以确保原子性，源于Redis的特性，下面是官网对eval命令的部分解释：<br><img src="/uploads/img/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F_01.png" alt="Redis分布式锁的正确实现方式"></p>
-<p>简单来说，就是在eval命令执行Lua代码的时候，Lua代码将被当成一个命令去执行，并且直到eval命令执行完成，Redis才会执行其他命令。</p>
-<h6 id="2、错误示例1-1"><a href="#2、错误示例1-1" class="headerlink" title="2、错误示例1"></a>2、错误示例1</h6><p>最常见的解锁代码就是直接使用jedis.del()方法删除锁，这种不先判断锁的拥有者而直接解锁的方式，会导致任何客户端都可以随时进行解锁，即使这把锁不是它的。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongReleaseLock1</span><span class="params">(Jedis jedis, String lockKey)</span> </span>&#123;</span><br><span class="line">    jedis.del(lockKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3、错误示例2-1"><a href="#3、错误示例2-1" class="headerlink" title="3、错误示例2"></a>3、错误示例2</h6><p>这种解锁代码乍一看也是没问题，甚至我之前也差点这样实现，与正确姿势差不多，唯一区别的是分成两条命令去执行，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wrongReleaseLock2</span><span class="params">(Jedis jedis, String lockKey, String requestId)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 判断加锁与解锁是不是同一个客户端</span></span><br><span class="line">    <span class="keyword">if</span> (requestId.equals(jedis.get(lockKey))) &#123;</span><br><span class="line">        <span class="comment">// 若在此时，这把锁突然不是这个客户端的，则会误解锁</span></span><br><span class="line">        jedis.del(lockKey);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如代码注释，问题在于如果调用jedis.del()方法的时候，这把锁已经不属于当前客户端的时候会解除他人加的锁。那么是否真的有这种场景？答案是肯定的，比如客户端A加锁，一段时间之后客户端A解锁，在执行jedis.del()之前，锁突然过期了，此时客户端B尝试加锁成功，然后客户端A再执行del()方法，则将客户端B的锁给解除了。</p>
-<hr>
-<h4 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h4><p>本文主要介绍了如何使用Java代码正确实现Redis分布式锁，对于加锁和解锁也分别给出了两个比较经典的错误示例。其实想要通过Redis实现分布式锁并不难，只要保证能满足可靠性里的四个条件。互联网虽然给我们带来了方便，只要有问题就可以google，然而网上的答案一定是对的吗？其实不然，所以我们更应该时刻保持着质疑精神，多想多验证。</p>
-<p>如果你的项目中Redis是多机部署的，那么可以尝试使用Redisson实现分布式锁，这是Redis官方提供的Java组件，链接在参考阅读章节已经给出。</p>
-<h4 id="五、参考阅读"><a href="#五、参考阅读" class="headerlink" title="五、参考阅读"></a>五、参考阅读</h4><ul>
-<li><a href="https://redis.io/topics/distlock">Distributed locks with Redis</a></li>
-<li><a href="https://redis.io/commands/eval">EVAL command</a></li>
-<li><a href="https://github.com/redisson/redisson">Redisson</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>分布式锁</tag>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gradle_local_and_remoting_repositories</title>
     <url>/posts/ce4646a7/</url>
     <content><![CDATA[<h3 id="1、本地仓库"><a href="#1、本地仓库" class="headerlink" title="1、本地仓库"></a>1、本地仓库</h3><p>配置环境变量<code>GRADLE_USER_HOME</code>，并指向你的一个本地目录，用来保存Gradle下载的依赖包。通常我们配置成和<code>Maven</code>同一个本地路径</p>
@@ -383,49 +426,6 @@
       <tags>
         <tag>构建工具</tag>
         <tag>gradle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>design-patterns</title>
-    <url>/posts/14da54c5/</url>
-    <content><![CDATA[<h1 id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介</h1><p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理的运用设计模式可以完美的解决很多问题，每种模式在现在中都有相应的原理来与之对应，每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是它能被广泛应用的原因。本章我们会以理论与实践相结合的方式来进行本章的学习，希望广大程序爱好者，学好设计模式，做一个优秀的软件工程师！</p>
-<span id="more"></span>
-
-<h2 id="一、设计模式的分类"><a href="#一、设计模式的分类" class="headerlink" title="一、设计模式的分类"></a>一、设计模式的分类</h2><p>总体来说设计模式分为三大类：</p>
-<p>　　创建型模式，共五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。</p>
-<p>　　结构型模式，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。</p>
-<p>　　行为型模式，共十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</p>
-<p>其实还有两类：并发型模式和线程池模式。用一个图片来整体描述一下：<br><img src="/uploads/img/design-patterns.jpg" alt="设计模式之间的关系"></p>
-<h2 id="二、设计模式的六大原则"><a href="#二、设计模式的六大原则" class="headerlink" title="二、设计模式的六大原则"></a>二、设计模式的六大原则</h2><ul>
-<li>开闭原则（Open Close Principle）</li>
-</ul>
-<p>　　开闭原则就是说对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。所以一句话概括就是：为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p>
-<ul>
-<li>里氏代换原则（Liskov Substitution Principle）</li>
-</ul>
-<p>　　里氏代换原则(Liskov Substitution Principle LSP)面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。 LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。—— From Baidu 百科</p>
-<ul>
-<li>依赖倒转原则（Dependence Inversion Principle）</li>
-</ul>
-<p>　　这个是开闭原则的基础，具体内容：真对接口编程，依赖于抽象而不依赖于具体。</p>
-<ul>
-<li>接口隔离原则（Interface Segregation Principle）</li>
-</ul>
-<p>　　这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。还是一个降低类之间的耦合度的意思，从这儿我们看出，其实设计模式就是一个软件的设计思想，从大型软件架构出发，为了升级和维护方便。所以上文中多次出现：降低依赖，降低耦合。</p>
-<ul>
-<li>迪米特法则（最少知道原则）（Demeter Principle）</li>
-</ul>
-<p>　　为什么叫最少知道原则，就是说：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。</p>
-<ul>
-<li>合成复用原则（Composite Reuse Principle）</li>
-</ul>
-<p>　　原则是尽量使用合成/聚合的方式，而不是使用继承。</p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -471,6 +471,66 @@
       </categories>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一个基础面试题</title>
+    <url>/posts/43a1c559/</url>
+    <content><![CDATA[<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>2015 携程的 JAVA 工程师的面试题</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String baseName = <span class="string">&quot;base&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Base</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		callName();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(baseName);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">private</span> String baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(baseName);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Base base = <span class="keyword">new</span> Sub();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>求这段程序的输出值？</p>
+<span id="more"></span>
+
+<h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><p>因为本身一开始我也做错了这道题，因此不好写一开始的思考思路，我们就用最直接的方法来看下答案是什么？<br>其实，在自己编写这个程序的时候，我们可以把题目中的代码稍稍调整下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String baseName = <span class="string">&quot;base&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Base</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		callName();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(baseName);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">private</span> String baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		Sub()&#123;</span><br><span class="line">			<span class="keyword">super</span>();</span><br><span class="line">			<span class="keyword">this</span>.baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		* 此处加一个<span class="doctag">@Override</span>注解，说明是对父类同名方法的重写</span></span><br><span class="line"><span class="comment">		*/</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(baseName);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Base base = <span class="keyword">new</span> Sub();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接把程序运行，看输出的结果：<img src="/uploads/img/2136918-8173284a8ef38946.png" alt="直接运行输出结果"><br>可以看到，结果为 null 。为什么呢？</p>
+<p>我们在仔细的观察一下题目，可以知道，这道题无非就是考察我们三个知识点，</p>
+<ul>
+<li>类的加载机制以及类的初始化过程；</li>
+<li>继承的相关知识，其中这里涉及到子类继承父类的时候，同名的属性不会覆盖父类，只是会将父类的同名属性隐藏；</li>
+<li>多态性，多态性就是让实现与接口进行分离，在这道题目中，在父类的构造方法中调用了虚函数造成多态</li>
+</ul>
+<p>既然我们上面就提到这个题目就是考察我们三个知识点，那么我们就根据题目对这三个知识点进行逐一击破</p>
+<ol>
+<li>类加载的机制和程序运行的顺序</li>
+</ol>
+<p>我们通过 Debug 能很好的了解程序的运行顺序，因为 new 了一个 Sub 对象，且 Sub 类中没有重写构造函数，因此会调用父类的构造函数，父类 Base 的构造函数中调用了 callName 方法，因此就在父类的 callName 方法中的输出语句打一个断点，最后因为子类的 Sub 重写了 callName 方法， 因此也在子类中重写的 callName 方法中打一个断点。最后通过 debug 我们可以看出程序的运行顺序<br><img src="/uploads/img/debug%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E9%A1%BA%E5%BA%8F.png" alt="debug查看运行的顺序"></p>
+<p>知道了程序的运行顺序之后，我们还需知道一个知识点，那就是类的实例变量的初始化过程，也就是题目中成员变量 baseName 的初始化过程。</p>
+<p>我们都知道，一个类一旦被加载连接初始化，它就可以随时被使用了，程序可以访问它的静态字段，调用静态方法，或者创建它的实例。在 JAVA 程序中类可以被明确或者隐含地实例化有四种途径：<br>(1) 明确使用 new 操作符；<br>(2) 调用 Class 或者 Constructor 对象的 newInstance() 方法；<br>(3) 调用任何现有对象的 clone() 方法；<br>(4) 通过 objectInputStream 类的 getObject() 方法反序列化。<br>虚拟机创建一个新的实例时，都需要在堆中为保存对象的实例分配内存。所有在对象的类中和它的父类中声明的变量（包括隐藏的实例变量）都要分配内存。一旦虚拟机为新的对象准备好堆内存，它立即把实例变量初始化为默认的初始值。</p>
+<ol start="2">
+<li>继承</li>
+</ol>
+<p>题目中 Sub 类继承了 Base 类，关于继承，一个基本所有人都知道的知识点，不过这里还是贴出来</p>
+<blockquote>
+<p>Java保证了一个对象被初始化前其父类也必须被初始化。有下面机制来保证：Java强制要求任何类的构造函数中的第一句必须是调用父类构造函数或者是类中定义的其他构造函数。如果没有构造函数，系统添加默认的无参构造函数，如果我们的构造函数中没有显示的调用父类的构造函数，那么编译器自动生成一个父类的无参构造函数</p>
+</blockquote>
+<ol start="3">
+<li>多态</li>
+</ol>
+<p>父类中的构造函数调用了 callName 方法，在题目中是通过 new Sub() 对象，因此调用的是子类 Sub 类中的 callName 方法，因此当前的 this 是指 Sub 类中的。</p>
+<p>好了，最后我们根据运行顺序分析整个过程<br>（1）Base b = new Sub();</p>
+<p>在 main 方法中声明父类变量b对子类的引用，JAVA类加载器将Base,Sub类加载到JVM;也就是完成了 Base 类和 Sub 类的初始化</p>
+<p>（2）JVM 为 Base,Sub 的的成员开辟内存空间且值均为 null</p>
+<p>在初始化 Sub 对象前，首先 JAVA 虚拟机就在堆区开辟内存并将子类 Sub 中的 baseName 和父类 Base 中的 baseName（已被隐藏）均赋为 null ，至于为什么 Base 类中的 baseName 为什么会被隐藏，上面的知识点也已经说明，就是子类继承父类的时候，同名的属性不会覆盖父类，只是会将父类的同名属性隐藏</p>
+<p>（3）调用父类的无参构造</p>
+<p>调用 Sub 的构造函数，因为子类没有重写构造函数，默认调用无参的构造函数，调用了 super() 。</p>
+<p>（4）callName 在子类中被重写，因此调用子类的 callName();</p>
+<p>调用了父类的构造函数，父类的构造函数中调用了 callName 方法，此时父类中的 baseName 的值为 base，可是子类重写了 callName 方法，且 调用父类 Base 中的 callName 是在子类 Sub 中调用的，因此当前的 this 指向的是子类，也就是说是实现子类的 callName 方法</p>
+<p>（5）调用子类的callName，打印baseName</p>
+<p>实际上在new Sub()时，实际执行过程为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Sub</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    baseName = <span class="string">&quot;sub&quot;</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可见，在 baseName = “sub” 执行前，子类的 callName() 已经执行，所以子类的 baseName 为默认值状态 null 。</p>
+<h4 id="原文出处"><a href="#原文出处" class="headerlink" title="原文出处"></a>原文出处</h4><p>作者：fuck两点水<br>链接：<a href="https://www.jianshu.com/p/39f91f3fba32">https://www.jianshu.com/p/39f91f3fba32</a><br>來源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+]]></content>
+      <categories>
+        <category>面试题</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面试题</tag>
       </tags>
   </entry>
   <entry>
@@ -572,66 +632,6 @@
         <tag>idea</tag>
         <tag>eclipse</tag>
         <tag>GC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个基础面试题</title>
-    <url>/posts/43a1c559/</url>
-    <content><![CDATA[<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
-<p>2015 携程的 JAVA 工程师的面试题</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String baseName = <span class="string">&quot;base&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Base</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		callName();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(baseName);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">private</span> String baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(baseName);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Base base = <span class="keyword">new</span> Sub();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>求这段程序的输出值？</p>
-<span id="more"></span>
-
-<h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><p>因为本身一开始我也做错了这道题，因此不好写一开始的思考思路，我们就用最直接的方法来看下答案是什么？<br>其实，在自己编写这个程序的时候，我们可以把题目中的代码稍稍调整下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String baseName = <span class="string">&quot;base&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Base</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		callName();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(baseName);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">private</span> String baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		Sub()&#123;</span><br><span class="line">			<span class="keyword">super</span>();</span><br><span class="line">			<span class="keyword">this</span>.baseName = <span class="string">&quot;sub&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		* 此处加一个<span class="doctag">@Override</span>注解，说明是对父类同名方法的重写</span></span><br><span class="line"><span class="comment">		*/</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(baseName);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Base base = <span class="keyword">new</span> Sub();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>直接把程序运行，看输出的结果：<img src="/uploads/img/2136918-8173284a8ef38946.png" alt="直接运行输出结果"><br>可以看到，结果为 null 。为什么呢？</p>
-<p>我们在仔细的观察一下题目，可以知道，这道题无非就是考察我们三个知识点，</p>
-<ul>
-<li>类的加载机制以及类的初始化过程；</li>
-<li>继承的相关知识，其中这里涉及到子类继承父类的时候，同名的属性不会覆盖父类，只是会将父类的同名属性隐藏；</li>
-<li>多态性，多态性就是让实现与接口进行分离，在这道题目中，在父类的构造方法中调用了虚函数造成多态</li>
-</ul>
-<p>既然我们上面就提到这个题目就是考察我们三个知识点，那么我们就根据题目对这三个知识点进行逐一击破</p>
-<ol>
-<li>类加载的机制和程序运行的顺序</li>
-</ol>
-<p>我们通过 Debug 能很好的了解程序的运行顺序，因为 new 了一个 Sub 对象，且 Sub 类中没有重写构造函数，因此会调用父类的构造函数，父类 Base 的构造函数中调用了 callName 方法，因此就在父类的 callName 方法中的输出语句打一个断点，最后因为子类的 Sub 重写了 callName 方法， 因此也在子类中重写的 callName 方法中打一个断点。最后通过 debug 我们可以看出程序的运行顺序<br><img src="/uploads/img/debug%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E9%A1%BA%E5%BA%8F.png" alt="debug查看运行的顺序"></p>
-<p>知道了程序的运行顺序之后，我们还需知道一个知识点，那就是类的实例变量的初始化过程，也就是题目中成员变量 baseName 的初始化过程。</p>
-<p>我们都知道，一个类一旦被加载连接初始化，它就可以随时被使用了，程序可以访问它的静态字段，调用静态方法，或者创建它的实例。在 JAVA 程序中类可以被明确或者隐含地实例化有四种途径：<br>(1) 明确使用 new 操作符；<br>(2) 调用 Class 或者 Constructor 对象的 newInstance() 方法；<br>(3) 调用任何现有对象的 clone() 方法；<br>(4) 通过 objectInputStream 类的 getObject() 方法反序列化。<br>虚拟机创建一个新的实例时，都需要在堆中为保存对象的实例分配内存。所有在对象的类中和它的父类中声明的变量（包括隐藏的实例变量）都要分配内存。一旦虚拟机为新的对象准备好堆内存，它立即把实例变量初始化为默认的初始值。</p>
-<ol start="2">
-<li>继承</li>
-</ol>
-<p>题目中 Sub 类继承了 Base 类，关于继承，一个基本所有人都知道的知识点，不过这里还是贴出来</p>
-<blockquote>
-<p>Java保证了一个对象被初始化前其父类也必须被初始化。有下面机制来保证：Java强制要求任何类的构造函数中的第一句必须是调用父类构造函数或者是类中定义的其他构造函数。如果没有构造函数，系统添加默认的无参构造函数，如果我们的构造函数中没有显示的调用父类的构造函数，那么编译器自动生成一个父类的无参构造函数</p>
-</blockquote>
-<ol start="3">
-<li>多态</li>
-</ol>
-<p>父类中的构造函数调用了 callName 方法，在题目中是通过 new Sub() 对象，因此调用的是子类 Sub 类中的 callName 方法，因此当前的 this 是指 Sub 类中的。</p>
-<p>好了，最后我们根据运行顺序分析整个过程<br>（1）Base b = new Sub();</p>
-<p>在 main 方法中声明父类变量b对子类的引用，JAVA类加载器将Base,Sub类加载到JVM;也就是完成了 Base 类和 Sub 类的初始化</p>
-<p>（2）JVM 为 Base,Sub 的的成员开辟内存空间且值均为 null</p>
-<p>在初始化 Sub 对象前，首先 JAVA 虚拟机就在堆区开辟内存并将子类 Sub 中的 baseName 和父类 Base 中的 baseName（已被隐藏）均赋为 null ，至于为什么 Base 类中的 baseName 为什么会被隐藏，上面的知识点也已经说明，就是子类继承父类的时候，同名的属性不会覆盖父类，只是会将父类的同名属性隐藏</p>
-<p>（3）调用父类的无参构造</p>
-<p>调用 Sub 的构造函数，因为子类没有重写构造函数，默认调用无参的构造函数，调用了 super() 。</p>
-<p>（4）callName 在子类中被重写，因此调用子类的 callName();</p>
-<p>调用了父类的构造函数，父类的构造函数中调用了 callName 方法，此时父类中的 baseName 的值为 base，可是子类重写了 callName 方法，且 调用父类 Base 中的 callName 是在子类 Sub 中调用的，因此当前的 this 指向的是子类，也就是说是实现子类的 callName 方法</p>
-<p>（5）调用子类的callName，打印baseName</p>
-<p>实际上在new Sub()时，实际执行过程为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Sub</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    baseName = <span class="string">&quot;sub&quot;</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可见，在 baseName = “sub” 执行前，子类的 callName() 已经执行，所以子类的 baseName 为默认值状态 null 。</p>
-<h4 id="原文出处"><a href="#原文出处" class="headerlink" title="原文出处"></a>原文出处</h4><p>作者：fuck两点水<br>链接：<a href="https://www.jianshu.com/p/39f91f3fba32">https://www.jianshu.com/p/39f91f3fba32</a><br>來源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
-]]></content>
-      <categories>
-        <category>面试题</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>面试题</tag>
       </tags>
   </entry>
 </search>
